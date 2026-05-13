@@ -1,0 +1,21 @@
+{
+  "problema": "Rede Perceptron Multicamadas - Sistema de Ressonância Magnética",
+  "entradas": [
+    "x1",
+    "x2",
+    "x3"
+  ],
+  "saida": "y (energia absorvida)",
+  "topologia": {
+    "entradas": 3,
+    "camada_oculta": 12,
+    "camada_saida": 10,
+    "saidas": 1
+  },
+  "algoritmo": "Backpropagation (Regra Delta Generalizada)",
+  "funcao_ativacao": "logistica (sigmoid)",
+  "taxa_aprendizado": 0.1,
+  "precisao": 1e-06,
+  "num_treinamentos": 5,
+  "pesos_iniciais": "aleatorios entre 0 e 1"
+}

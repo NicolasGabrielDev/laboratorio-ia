@@ -1,0 +1,32 @@
+[
+  {
+    "treinamento": "T1",
+    "seed": 42,
+    "eqm_final": 0.001797019149699626,
+    "num_epocas": 50000
+  },
+  {
+    "treinamento": "T2",
+    "seed": 7,
+    "eqm_final": 0.0009767180285729154,
+    "num_epocas": 50000
+  },
+  {
+    "treinamento": "T3",
+    "seed": 2024,
+    "eqm_final": 0.000991123214996545,
+    "num_epocas": 50000
+  },
+  {
+    "treinamento": "T4",
+    "seed": 314,
+    "eqm_final": 0.0012292850354214205,
+    "num_epocas": 50000
+  },
+  {
+    "treinamento": "T5",
+    "seed": 99,
+    "eqm_final": 0.0071100401733790175,
+    "num_epocas": 50000
+  }
+]

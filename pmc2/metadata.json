@@ -1,0 +1,46 @@
+{
+  "problema": "Classificacao de conservantes em bebidas",
+  "variaveis_entrada": [
+    "x1 (teor de agua)",
+    "x2 (grau de acidez)",
+    "x3 (temperatura)",
+    "x4 (tensao superficial)"
+  ],
+  "classes": {
+    "A": [
+      1,
+      0,
+      0
+    ],
+    "B": [
+      0,
+      1,
+      0
+    ],
+    "C": [
+      0,
+      0,
+      1
+    ]
+  },
+  "arquitetura_rede": {
+    "entradas": 4,
+    "camadas_ocultas": [
+      15
+    ],
+    "saidas": 3
+  },
+  "hiperparametros": {
+    "funcao_ativacao": "sigmoid",
+    "taxa_aprendizado": 0.1,
+    "momentum": 0.9,
+    "precisao": 1e-06
+  },
+  "amostras_treinamento": 130,
+  "amostras_teste": 18,
+  "distribuicao_classes_treino": {
+    "A": 42,
+    "B": 45,
+    "C": 43
+  }
+}

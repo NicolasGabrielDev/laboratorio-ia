@@ -1,0 +1,696 @@
+{
+  "standard": {
+    "accuracy_pct": 100.0,
+    "details": [
+      {
+        "sample": 1,
+        "desired": [
+          0,
+          0,
+          1
+        ],
+        "raw_output": [
+          0.0,
+          0.002,
+          0.9881
+        ],
+        "predicted": [
+          0,
+          0,
+          1
+        ],
+        "correct": true
+      },
+      {
+        "sample": 2,
+        "desired": [
+          1,
+          0,
+          0
+        ],
+        "raw_output": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "predicted": [
+          1,
+          0,
+          0
+        ],
+        "correct": true
+      },
+      {
+        "sample": 3,
+        "desired": [
+          0,
+          0,
+          1
+        ],
+        "raw_output": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "predicted": [
+          0,
+          0,
+          1
+        ],
+        "correct": true
+      },
+      {
+        "sample": 4,
+        "desired": [
+          0,
+          1,
+          0
+        ],
+        "raw_output": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "predicted": [
+          0,
+          1,
+          0
+        ],
+        "correct": true
+      },
+      {
+        "sample": 5,
+        "desired": [
+          0,
+          0,
+          1
+        ],
+        "raw_output": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "predicted": [
+          0,
+          0,
+          1
+        ],
+        "correct": true
+      },
+      {
+        "sample": 6,
+        "desired": [
+          1,
+          0,
+          0
+        ],
+        "raw_output": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "predicted": [
+          1,
+          0,
+          0
+        ],
+        "correct": true
+      },
+      {
+        "sample": 7,
+        "desired": [
+          0,
+          1,
+          0
+        ],
+        "raw_output": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "predicted": [
+          0,
+          1,
+          0
+        ],
+        "correct": true
+      },
+      {
+        "sample": 8,
+        "desired": [
+          0,
+          1,
+          0
+        ],
+        "raw_output": [
+          0.0,
+          0.9981,
+          0.0011
+        ],
+        "predicted": [
+          0,
+          1,
+          0
+        ],
+        "correct": true
+      },
+      {
+        "sample": 9,
+        "desired": [
+          1,
+          0,
+          0
+        ],
+        "raw_output": [
+          0.9999,
+          0.0007,
+          0.0
+        ],
+        "predicted": [
+          1,
+          0,
+          0
+        ],
+        "correct": true
+      },
+      {
+        "sample": 10,
+        "desired": [
+          1,
+          0,
+          0
+        ],
+        "raw_output": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "predicted": [
+          1,
+          0,
+          0
+        ],
+        "correct": true
+      },
+      {
+        "sample": 11,
+        "desired": [
+          0,
+          1,
+          0
+        ],
+        "raw_output": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "predicted": [
+          0,
+          1,
+          0
+        ],
+        "correct": true
+      },
+      {
+        "sample": 12,
+        "desired": [
+          1,
+          0,
+          0
+        ],
+        "raw_output": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "predicted": [
+          1,
+          0,
+          0
+        ],
+        "correct": true
+      },
+      {
+        "sample": 13,
+        "desired": [
+          0,
+          0,
+          1
+        ],
+        "raw_output": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "predicted": [
+          0,
+          0,
+          1
+        ],
+        "correct": true
+      },
+      {
+        "sample": 14,
+        "desired": [
+          0,
+          0,
+          1
+        ],
+        "raw_output": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "predicted": [
+          0,
+          0,
+          1
+        ],
+        "correct": true
+      },
+      {
+        "sample": 15,
+        "desired": [
+          0,
+          0,
+          1
+        ],
+        "raw_output": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "predicted": [
+          0,
+          0,
+          1
+        ],
+        "correct": true
+      },
+      {
+        "sample": 16,
+        "desired": [
+          1,
+          0,
+          0
+        ],
+        "raw_output": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "predicted": [
+          1,
+          0,
+          0
+        ],
+        "correct": true
+      },
+      {
+        "sample": 17,
+        "desired": [
+          0,
+          0,
+          1
+        ],
+        "raw_output": [
+          0.0,
+          0.0,
+          0.9897
+        ],
+        "predicted": [
+          0,
+          0,
+          1
+        ],
+        "correct": true
+      },
+      {
+        "sample": 18,
+        "desired": [
+          0,
+          1,
+          0
+        ],
+        "raw_output": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "predicted": [
+          0,
+          1,
+          0
+        ],
+        "correct": true
+      }
+    ]
+  },
+  "momentum": {
+    "accuracy_pct": 94.44,
+    "details": [
+      {
+        "sample": 1,
+        "desired": [
+          0,
+          0,
+          1
+        ],
+        "raw_output": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "predicted": [
+          0,
+          0,
+          1
+        ],
+        "correct": true
+      },
+      {
+        "sample": 2,
+        "desired": [
+          1,
+          0,
+          0
+        ],
+        "raw_output": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "predicted": [
+          1,
+          0,
+          0
+        ],
+        "correct": true
+      },
+      {
+        "sample": 3,
+        "desired": [
+          0,
+          0,
+          1
+        ],
+        "raw_output": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "predicted": [
+          0,
+          0,
+          1
+        ],
+        "correct": true
+      },
+      {
+        "sample": 4,
+        "desired": [
+          0,
+          1,
+          0
+        ],
+        "raw_output": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "predicted": [
+          0,
+          1,
+          0
+        ],
+        "correct": true
+      },
+      {
+        "sample": 5,
+        "desired": [
+          0,
+          0,
+          1
+        ],
+        "raw_output": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "predicted": [
+          0,
+          0,
+          1
+        ],
+        "correct": true
+      },
+      {
+        "sample": 6,
+        "desired": [
+          1,
+          0,
+          0
+        ],
+        "raw_output": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "predicted": [
+          1,
+          0,
+          0
+        ],
+        "correct": true
+      },
+      {
+        "sample": 7,
+        "desired": [
+          0,
+          1,
+          0
+        ],
+        "raw_output": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "predicted": [
+          0,
+          1,
+          0
+        ],
+        "correct": true
+      },
+      {
+        "sample": 8,
+        "desired": [
+          0,
+          1,
+          0
+        ],
+        "raw_output": [
+          0.0,
+          0.9942,
+          0.0096
+        ],
+        "predicted": [
+          0,
+          1,
+          0
+        ],
+        "correct": true
+      },
+      {
+        "sample": 9,
+        "desired": [
+          1,
+          0,
+          0
+        ],
+        "raw_output": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "predicted": [
+          1,
+          0,
+          0
+        ],
+        "correct": true
+      },
+      {
+        "sample": 10,
+        "desired": [
+          1,
+          0,
+          0
+        ],
+        "raw_output": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "predicted": [
+          1,
+          0,
+          0
+        ],
+        "correct": true
+      },
+      {
+        "sample": 11,
+        "desired": [
+          0,
+          1,
+          0
+        ],
+        "raw_output": [
+          0.0,
+          0.9999,
+          0.0002
+        ],
+        "predicted": [
+          0,
+          1,
+          0
+        ],
+        "correct": true
+      },
+      {
+        "sample": 12,
+        "desired": [
+          1,
+          0,
+          0
+        ],
+        "raw_output": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "predicted": [
+          1,
+          0,
+          0
+        ],
+        "correct": true
+      },
+      {
+        "sample": 13,
+        "desired": [
+          0,
+          0,
+          1
+        ],
+        "raw_output": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "predicted": [
+          0,
+          0,
+          1
+        ],
+        "correct": true
+      },
+      {
+        "sample": 14,
+        "desired": [
+          0,
+          0,
+          1
+        ],
+        "raw_output": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "predicted": [
+          0,
+          0,
+          1
+        ],
+        "correct": true
+      },
+      {
+        "sample": 15,
+        "desired": [
+          0,
+          0,
+          1
+        ],
+        "raw_output": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "predicted": [
+          0,
+          0,
+          1
+        ],
+        "correct": true
+      },
+      {
+        "sample": 16,
+        "desired": [
+          1,
+          0,
+          0
+        ],
+        "raw_output": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "predicted": [
+          1,
+          0,
+          0
+        ],
+        "correct": true
+      },
+      {
+        "sample": 17,
+        "desired": [
+          0,
+          0,
+          1
+        ],
+        "raw_output": [
+          0.0,
+          0.4541,
+          0.0958
+        ],
+        "predicted": [
+          0,
+          0,
+          0
+        ],
+        "correct": false
+      },
+      {
+        "sample": 18,
+        "desired": [
+          0,
+          1,
+          0
+        ],
+        "raw_output": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "predicted": [
+          0,
+          1,
+          0
+        ],
+        "correct": true
+      }
+    ]
+  }
+}
