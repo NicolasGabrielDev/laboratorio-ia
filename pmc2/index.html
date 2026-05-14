@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados do Trabalho PMC2</title>
+    <style>
+        :root {
+            --bg-color: #f0f4f8;
+            --text-color: #333;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --primary-color: #4a90e2;
+            --secondary-color: #50e3c2;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #d1e3f8 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: #444;
+            margin-top: 25px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .answer-text {
+            font-size: 1.1rem;
+            background: rgba(74, 144, 226, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Resultados da Avaliação - PMC2</h1>
+
+        <div class="card">
+            <h2>1. Tabela Resumo dos Treinamentos</h2>
+            <p>Resultados comparativos do treinamento utilizando o Backpropagation Padrão contra o algoritmo implementado com fator de Momentum. A tabela inclui os valores finais de EQM, época de convergência, e o tempo levado.</p>
+            <img src="item1_tabela_treinamentos.png" alt="Tabela Resumo dos Treinamentos">
+        </div>
+
+        <div class="card">
+            <h2>2. Gráficos de EQM por Épocas</h2>
+            <p>Comportamento do Erro Quadrático Médio em escala logarítmica durante as épocas até alcançar o critério de parada.</p>
+            <img src="item2_eqm_epocas.png" alt="Gráficos EQM x Épocas">
+        </div>
+
+        <div class="card">
+            <h2>3. Pós-Processamento das Saídas</h2>
+            <p>Implementação do critério de arredondamento simétrico, essencial em processos de classificação de padrões, processando as predições numéricas da rede para identificar o conservante A, B ou C aplicável.</p>
+            <img src="item3_explicacao.png" alt="Pós-Processamento e Arredondamento Simétrico">
+            <div class="answer-text">
+                <p><strong>Critério adotado:</strong> Para todo neurônio na camada de saída com valor maior ou igual a 0.5, seu valor é arredondado para 1. Caso contrário, é arredondado para 0.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>4. Validação com o Conjunto de Teste</h2>
+            <p>Abaixo os resultados da taxa de acerto verificada na amostra de teste para a configuração Padrão e configuração com Momentum.</p>
+            <img src="item4_validacao.png" alt="Resultados de Validação">
+        </div>
+
+        <div class="card">
+            <h2>5. Comparativo e Melhor Configuração</h2>
+            <p>Uma métrica unificada comparando visualmente as vantagens do Momentum em relação ao treinamento padrão.</p>
+            <img src="item5_melhor_config.png" alt="Comparativo Melhor Configuração">
+            <div class="answer-text">
+                <p><strong>Conclusão sobre as topologias:</strong> O algoritmo de treinamento com Momentum superou consideravelmente a rede tradicional de Backpropagation Padrão, garantindo uma convergência muito mais rápida (menos épocas). Além da velocidade de decaimento do erro, as taxas de acerto na classificação final dos tipos de conservante mostraram-se mais eficientes.</p>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

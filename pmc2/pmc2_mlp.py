@@ -118,13 +118,13 @@ def train(W1_0, W2_0, use_momentum=False):
 
             # ── Aplica momentum se solicitado ──────
             if use_momentum:
-                dW2 = dW2 + BETA * dW2_prev
-                dW1 = dW1 + BETA * dW1_prev
-                dW2_prev = dW2.copy()
+                W2 += dW2 + BETA * dW2_prev
+                W1 += dW1 + BETA * dW1_prev
+                dW2_prev = dW2.copy()   # salva gradiente puro, sem momentum
                 dW1_prev = dW1.copy()
-
-            W2 += dW2
-            W1 += dW1
+            else:
+                W2 += dW2
+                W1 += dW1
 
         # EQM médio da época
         eqm_mean = eqm_epoch / N_TRAIN

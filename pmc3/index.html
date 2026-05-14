@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados do Trabalho PMC3</title>
+    <style>
+        :root {
+            --bg-color: #f0f4f8;
+            --text-color: #333;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --primary-color: #4a90e2;
+            --secondary-color: #50e3c2;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #d1e3f8 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: #444;
+            margin-top: 25px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .answer-text {
+            font-size: 1.1rem;
+            background: rgba(74, 144, 226, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Resultados da Avaliação - PMC3</h1>
+
+        <div class="card">
+            <h2>1. Tabela de Resultados dos Treinamentos</h2>
+            <p>Resultados finais de 3 treinamentos para cada uma das três topologias de rede, contendo o Erro Quadrático
+                Médio (EQM) final e o número de épocas percorridas até a convergência baseada na precisão estabelecida
+                (0.5x10<sup>-6</sup>).</p>
+            <img src="item1_tabela_treinamentos.png" alt="Tabela de Treinamentos (EQM e Épocas)">
+        </div>
+
+        <div class="card">
+            <h2>2. Validação da Rede (Erro Relativo Médio e Variância)</h2>
+            <p>Validação das redes candidatas baseada nas amostras do conjunto de testes ($t=101$ a $120$), exibindo os
+                valores previstos contra os desejados, bem como o Erro Relativo Médio geral e a respectiva Variância
+                obtida.</p>
+            <img src="item4_validacao.png" alt="Tabela de Validação">
+        </div>
+
+        <div class="card">
+            <h2>3. Gráfico de EQM x Épocas</h2>
+            <p>O acompanhamento da queda do Erro Quadrático Médio em função das épocas para o melhor treinamento
+                verificado em cada uma das três topologias.</p>
+            <img src="item2_eqm_epocas.png" alt="Gráfico EQM x Épocas">
+        </div>
+
+        <div class="card">
+            <h2>4. Gráfico: Valores Desejados vs Estimados</h2>
+            <p>Demonstração visual do desempenho dos melhores modelos treinados ao tentar replicar a curva dos valores
+                desejados da amostra de validação.</p>
+            <img src="item5_melhor_config.png" alt="Gráfico de Valores Desejados vs Estimados">
+        </div>
+
+        <div class="card">
+            <h2>5. Qual a topologia e treinamento mais adequados?</h2>
+            <div class="answer-text">
+                <p><strong>Topologia Escolhida:</strong> Rede 2 (10 entradas, 15 neurônios na camada oculta)</p>
+                <p><strong>Treinamento:</strong> T1</p>
+                <p><strong>Justificativa:</strong> Baseado nas análises do Erro Relativo Médio nos dados de validação, a
+                    Rede 2 apresentou a maior capacidade de generalização e os menores erros de predição (em torno de
+                    0.46) quando operando em dados não vistos no treinamento. As outras redes apresentaram underfitting
+                    ou overfitting na representação da série.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>6. Algoritmos de Treinamento Avançados</h2>
+
+            <h3>Resilient-Propagation (RProp)</h3>
+            <div class="answer-text">
+                <p><strong>Características e Vantagens:</strong><br>
+                    O algoritmo RProp baseia-se exclusivamente no <em>sinal</em> do gradiente, e não em sua magnitude,
+                    para realizar a atualização de pesos, adaptando independentemente o tamanho do passo (step size)
+                    para cada conexão da rede.</p>
+                <ul>
+                    <li>Ele resolve drasticamente o problema de desvanecimento de gradiente (vanishing gradient) em
+                        regiões saturadas da função sigmoide.</li>
+                    <li>Garante velocidade de convergência acelerada para problemas de aproximação complexos.</li>
+                    <li>É altamente robusto e possui hiperparâmetros internos universais pré-estabelecidos que requerem
+                        pouca sintonia manual.</li>
+                </ul>
+            </div>
+
+            <h3>Levenberg-Marquardt (LM)</h3>
+            <div class="answer-text">
+                <p><strong>Características e Vantagens:</strong><br>
+                    O algoritmo de Levenberg-Marquardt aproxima as equações do método de Newton combinando-as com o
+                    Gradiente Descendente sem calcular diretamente as derivadas secundárias (usando o Jacobiano).</p>
+                <ul>
+                    <li>Quando as perdas de treinamento baseiam-se no Erro Quadrático Médio, o LM é o algoritmo de
+                        treinamento mais veloz da literatura para redes pequenas e médias.</li>
+                    <li>No início, aproxima-se do gradiente descendente tornando-se robusto. Conforme alcança os mínimos
+                        da função de erro quadrático, transiciona para as propriedades de convergência super-rápidas
+                        (quadráticas) de Gauss-Newton.</li>
+                    <li>Lida formidavelmente com locais e planaltos da superfície de custo.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -347,7 +347,7 @@
     ]
   },
   "momentum": {
-    "accuracy_pct": 94.44,
+    "accuracy_pct": 100.0,
     "details": [
       {
         "sample": 1,
@@ -434,8 +434,8 @@
         ],
         "raw_output": [
           0.0,
-          0.0,
-          1.0
+          0.0016,
+          0.9982
         ],
         "predicted": [
           0,
@@ -491,8 +491,8 @@
         ],
         "raw_output": [
           0.0,
-          0.9942,
-          0.0096
+          0.9989,
+          0.0008
         ],
         "predicted": [
           0,
@@ -548,7 +548,7 @@
         ],
         "raw_output": [
           0.0,
-          0.9999,
+          0.9992,
           0.0002
         ],
         "predicted": [
@@ -662,15 +662,15 @@
         ],
         "raw_output": [
           0.0,
-          0.4541,
-          0.0958
+          0.0049,
+          0.8673
         ],
         "predicted": [
           0,
           0,
-          0
+          1
         ],
-        "correct": false
+        "correct": true
       },
       {
         "sample": 18,

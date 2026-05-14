@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados do Trabalho PMC1</title>
+    <style>
+        :root {
+            --bg-color: #f0f4f8;
+            --text-color: #333;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --primary-color: #4a90e2;
+            --secondary-color: #50e3c2;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #d1e3f8 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: #444;
+            margin-top: 25px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .answer-text {
+            font-size: 1.1rem;
+            background: rgba(74, 144, 226, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Resultados da Avaliação - PMC1</h1>
+
+        <div class="card">
+            <h2>1. Resultados dos 5 Treinamentos</h2>
+            <p>Abaixo a tabela mostrando o Erro Quadrático Médio final e o número de épocas para os 5 treinamentos realizados com inicializações aleatórias de pesos.</p>
+            <img src="item1_tabela_treinamentos.png" alt="Tabela de Treinamentos (EQM e Épocas)">
+        </div>
+
+        <div class="card">
+            <h2>2. Gráficos de EQM x Épocas</h2>
+            <p>Os gráficos de redução do erro quadrático médio ao longo das épocas (escala logarítmica) para os treinamentos que exigiram maior número de épocas.</p>
+            <img src="item2_eqm_epocas.png" alt="Gráfico EQM x Épocas">
+        </div>
+
+        <div class="card">
+            <h2>3. Por que o EQM e o Número de Épocas Variam entre Treinamentos?</h2>
+            <p>As explicações gráficas das análises (ver imagem) demonstram a variação dos fatores. Resumo explicativo abaixo:</p>
+            <img src="item3_explicacao.png" alt="Explicação: Por que EQM e Épocas variam">
+            <div class="answer-text">
+                <h3>Resumo:</h3>
+                <ul>
+                    <li><strong>Inicialização Aleatória dos Pesos:</strong> Cada treinamento posiciona a rede em um ponto diferente da superfície de erro não convexa, trilhando caminhos distintos de gradiente.</li>
+                    <li><strong>Mínimos Locais e Pontos de Sela:</strong> Como a superfície de erro possui vários mínimos locais e platôs, redes podem ficar "presas" em mínimos diferentes, afetando o EQM final.</li>
+                    <li><strong>Velocidade de Convergência:</strong> Regiões da superfície de erro com inclinações diferentes exigem diferentes números de passos (épocas) para a convergência de erro.</li>
+                    <li><strong>Critério de Parada Fixo (ε = 10⁻⁶):</strong> Alguns treinamentos chegam a um erro subótimo que atinge o critério mais rápido, enquanto outros procuram um mínimo global mais profundo gastando mais épocas.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>4. Validação com Conjunto de Teste</h2>
+            <p>Abaixo estão os resultados do teste no conjunto de validação, apresentando o Erro Relativo Médio e Variância de cada modelo treinado em dados não vistos.</p>
+            <img src="item4_validacao.png" alt="Tabela de Validação">
+        </div>
+
+        <div class="card">
+            <h2>5. Qual a Configuração Mais Adequada para o Sistema?</h2>
+            <p>No gráfico abaixo observa-se a comparação entre a saída desejada e a saída da melhor configuração obtida na validação.</p>
+            <img src="item5_melhor_config.png" alt="Gráfico de Valores Desejados vs Estimados">
+            <div class="answer-text">
+                <p><strong>Configuração Selecionada:</strong> T2</p>
+                <p><strong>Justificativa:</strong> O treinamento T2 apresentou o menor erro relativo médio (em torno de 1,97%) no conjunto de testes. Isso indica uma melhor generalização dos pesos não vistos. A variância baixa atesta a consistência das predições, o que é fundamental para evitar picos de erros ao lidar com predições de absorção de energia no sistema de ressonância magnética.</p>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
