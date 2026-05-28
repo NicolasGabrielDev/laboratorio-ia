@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Rede de Hopfield – Resultados</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #f4f6fb;
+    --surface: #ffffff;
+    --surface2: #f0f4f9;
+    --border: #e0e6f0;
+    --text: #1a2236;
+    --muted: #6b7a99;
+    --accent: #1a3a5c;
+    --success: #2f8f4e;
+    --danger: #b13b3b;
+    --dark: #747b84;
+    --light: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  header {
+    background: var(--accent);
+    color: #fff;
+    padding: 32px 48px;
+  }
+
+  header .tag {
+    font-size: .75em;
+    opacity: .65;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  header h1 {
+    font-size: 1.55em;
+    font-weight: 700;
+  }
+
+  header p {
+    opacity: .72;
+    font-size: .88em;
+    margin-top: 6px;
+  }
+
+  nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    padding: 0 44px;
+    overflow-x: auto;
+  }
+
+  nav button {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: 'Inter', sans-serif;
+    font-size: .875em;
+    font-weight: 500;
+    padding: 14px 22px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color .15s, border-color .15s;
+  }
+
+  nav button.active {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  nav button:hover { color: var(--text); }
+
+  main {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 32px 20px 56px;
+  }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 1em;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+
+  h3 {
+    font-size: .8em;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    margin: 22px 0 10px;
+  }
+
+  p { font-size: .92em; }
+
+  .muted { color: var(--muted); }
+
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .kpi {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .kpi .val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.35em;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .kpi .lbl {
+    font-size: .73em;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .875em;
+  }
+
+  th {
+    padding: 10px 14px;
+    background: var(--surface2);
+    color: var(--muted);
+    font-weight: 600;
+    font-size: .75em;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .85em;
+  }
+
+  td.left { text-align: left; font-family: 'Inter', sans-serif; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--surface2); }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: .85em;
+  }
+
+  .badge-success { background: #d6f0df; color: var(--success); }
+  .badge-failure { background: #fde3e3; color: var(--danger); }
+
+  .note {
+    background: #eef4ff;
+    border: 1px solid #c5d8f0;
+    border-radius: 6px;
+    padding: 14px 18px;
+    font-size: .875em;
+    color: #2c4e80;
+    margin-top: 14px;
+  }
+
+  .math {
+    background: var(--surface2);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .86em;
+    white-space: pre-wrap;
+    color: #2c3e60;
+    margin: 12px 0;
+    line-height: 1.9;
+  }
+
+  .cases {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .case-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    background: var(--surface);
+  }
+
+  .case-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .case-title h3 { margin: 0; }
+
+  .image-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(160px, 1fr));
+    gap: 18px;
+    align-items: start;
+    margin-top: 14px;
+  }
+
+  .image-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  .image-box strong {
+    display: block;
+    font-size: .75em;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: 10px;
+  }
+
+  .pixel-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 20px);
+    grid-auto-rows: 20px;
+    gap: 0;
+    justify-content: center;
+  }
+
+  .pixel {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #2d3540;
+    background: var(--light);
+  }
+
+  .pixel.dark { background: var(--dark); }
+
+  canvas {
+    width: 100%;
+    max-width: 100%;
+    height: 360px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    margin-top: 10px;
+  }
+
+  .chart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+  }
+
+  .error {
+    background: #fff1f1;
+    border: 1px solid #f0c5c5;
+    color: #7b2323;
+    border-radius: 8px;
+    padding: 16px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  @media (max-width: 760px) {
+    header { padding: 28px 22px; }
+    nav { padding: 0 12px; }
+    main { padding: 24px 14px 44px; }
+    .card { padding: 22px 18px; }
+    .image-row { grid-template-columns: 1fr; }
+    table { display: block; overflow-x: auto; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="tag">CEFET-MG · Campus VIII · Lab. Inteligência Artificial · 2026</div>
+  <h1>Rede de Hopfield — Recuperação de Imagens com Ruído</h1>
+  <p>Memória associativa com 45 neurônios · 4 padrões armazenados · pixels bipolares em -1 e +1</p>
+</header>
+
+<nav>
+  <button class="active" onclick="showTab('overview', this)">Visão Geral</button>
+  <button onclick="showTab('transmissions', this)">12 Transmissões</button>
+  <button onclick="showTab('noise', this)">Ruído</button>
+  <button onclick="showTab('answers', this)">Respostas</button>
+</nav>
+
+<main>
+  <div id="overview" class="section active">
+    <div class="kpis" id="kpis"></div>
+    <div class="card" id="network"></div>
+    <div class="card" id="transmission-table"></div>
+  </div>
+
+  <div id="transmissions" class="section">
+    <div class="card">
+      <h2>Doze Situações Simuladas</h2>
+      <div id="cases" class="cases"></div>
+    </div>
+  </div>
+
+  <div id="noise" class="section">
+    <div class="card" id="noise-table"></div>
+    <div class="chart-grid">
+      <div class="card">
+        <h2>Acurácia por Nível de Ruído</h2>
+        <canvas id="accuracy-chart" width="900" height="360"></canvas>
+      </div>
+      <div class="card">
+        <h2>Distância Média Final por Nível de Ruído</h2>
+        <canvas id="distance-chart" width="900" height="360"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div id="answers" class="section">
+    <div class="card" id="answers-card"></div>
+  </div>
+</main>
+
+<script src="results.js"></script>
+<script>
+function showTab(id, button) {
+  document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(navButton => navButton.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  button.classList.add('active');
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+
+function percent(value) {
+  return `${(value * 100).toFixed(2)}%`;
+}
+
+function renderPixelGrid(lines) {
+  const grid = document.createElement('div');
+  grid.className = 'pixel-grid';
+
+  lines.forEach(line => {
+    Array.from(line).forEach(char => {
+      const pixel = document.createElement('div');
+      pixel.className = char === '#' ? 'pixel dark' : 'pixel';
+      grid.appendChild(pixel);
+    });
+  });
+
+  return grid;
+}
+
+function drawLineChart(canvasId, rows, valueKey, yLabel) {
+  const canvas = document.getElementById(canvasId);
+  const context = canvas.getContext('2d');
+  const width = canvas.width;
+  const height = canvas.height;
+  const padding = 58;
+  const values = rows.map(row => row[valueKey]);
+  const maxValue = Math.max(...values, valueKey === 'accuracy' ? 1 : 0.1);
+  const minValue = 0;
+  const plotWidth = width - padding * 1.7;
+  const plotHeight = height - padding * 1.7;
+
+  context.clearRect(0, 0, width, height);
+  context.font = '14px Inter, Arial, sans-serif';
+  context.strokeStyle = '#1a3a5c';
+  context.fillStyle = '#1a3a5c';
+  context.lineWidth = 1.5;
+
+  context.beginPath();
+  context.moveTo(padding, padding / 2);
+  context.lineTo(padding, height - padding);
+  context.lineTo(width - padding / 2, height - padding);
+  context.stroke();
+
+  context.fillText(yLabel, padding, 24);
+  context.fillText('Ruído', width - 95, height - 18);
+
+  const points = rows.map((row, index) => {
+    const divisor = rows.length > 1 ? rows.length - 1 : 1;
+    const x = padding + index * (plotWidth / divisor);
+    const normalized = (row[valueKey] - minValue) / (maxValue - minValue || 1);
+    const y = height - padding - normalized * plotHeight;
+    return { x, y, value: row[valueKey], label: `${row.noise_percent}%` };
+  });
+
+  context.beginPath();
+  points.forEach((point, index) => {
+    if (index === 0) {
+      context.moveTo(point.x, point.y);
+    } else {
+      context.lineTo(point.x, point.y);
+    }
+  });
+  context.stroke();
+
+  points.forEach(point => {
+    context.beginPath();
+    context.arc(point.x, point.y, 4, 0, Math.PI * 2);
+    context.fill();
+    context.fillText(point.label, point.x - 14, height - padding + 22);
+    const displayValue = valueKey === 'accuracy' ? percent(point.value) : point.value.toFixed(2);
+    context.fillText(displayValue, point.x - 20, point.y - 10);
+  });
+}
+
+function renderKpis(data) {
+  const summary = data.summary;
+  const kpiData = [
+    { val: data.network.neurons, lbl: 'Neurônios' },
+    { val: data.network.stored_patterns, lbl: 'Padrões' },
+    { val: summary.transmission_tests, lbl: 'Transmissões' },
+    { val: summary.successful_transmission_tests, lbl: 'Acertos' },
+    { val: percent(summary.transmission_accuracy), lbl: 'Acurácia' },
+    { val: summary.average_initial_distance, lbl: 'Distância inicial média' },
+    { val: summary.average_final_distance, lbl: 'Distância final média' }
+  ];
+
+  document.getElementById('kpis').innerHTML = kpiData.map(item => `
+    <div class="kpi">
+      <div class="val">${escapeHtml(item.val)}</div>
+      <div class="lbl">${escapeHtml(item.lbl)}</div>
+    </div>
+  `).join('');
+}
+
+function renderNetwork(data) {
+  document.getElementById('network').innerHTML = `
+    <h2>Configuração da Rede</h2>
+    <table>
+      <tbody>
+        <tr><th>Neurônios</th><td>${data.network.neurons}</td></tr>
+        <tr><th>Padrões armazenados</th><td>${data.network.stored_patterns}</td></tr>
+        <tr><th>Regra de treinamento</th><td class="left">${escapeHtml(data.network.training_rule)}</td></tr>
+        <tr><th>Ativação</th><td class="left">${escapeHtml(data.network.activation)}</td></tr>
+        <tr><th>Máximo de iterações</th><td>${data.network.max_iterations}</td></tr>
+      </tbody>
+    </table>
+    <div class="note">O fluxo esperado é executar primeiro <strong>extract_data.py</strong>, depois <strong>hopfield.py</strong>. O arquivo <strong>hopfield.py</strong> gera <strong>results.js</strong>, e este relatório lê esse arquivo diretamente por meio de uma tag script, sem fetch e sem leitura de arquivo JSON no navegador. Assim, pode ser aberto diretamente no navegador, desde que <strong>index.html</strong> e <strong>results.js</strong> estejam na mesma pasta.</div>
+  `;
+}
+
+function renderTransmissionTable(data) {
+  const rows = data.transmission_results.map(result => `
+    <tr>
+      <td>${escapeHtml(result.id)}</td>
+      <td>${escapeHtml(result.source_label)}</td>
+      <td>${result.flipped_pixels}</td>
+      <td>${result.initial_distance}</td>
+      <td>${result.final_distance}</td>
+      <td>${result.iterations}</td>
+      <td>${escapeHtml(result.recovered_label)}</td>
+      <td><span class="badge ${result.success ? 'badge-success' : 'badge-failure'}">${result.success ? 'Sim' : 'Não'}</span></td>
+    </tr>
+  `).join('');
+
+  document.getElementById('transmission-table').innerHTML = `
+    <h2>Tabela de Resultados das Transmissões</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Amostra</th>
+          <th>Padrão original</th>
+          <th>Pixels alterados</th>
+          <th>Distância inicial</th>
+          <th>Distância final</th>
+          <th>Iterações</th>
+          <th>Padrão recuperado</th>
+          <th>Recuperou?</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+}
+
+function renderCases(data) {
+  const container = document.getElementById('cases');
+  container.innerHTML = '';
+
+  data.transmission_results.forEach(result => {
+    const card = document.createElement('div');
+    card.className = 'case-card';
+    card.innerHTML = `
+      <div class="case-title">
+        <h3>${escapeHtml(result.id)}</h3>
+        <span class="badge ${result.success ? 'badge-success' : 'badge-failure'}">${result.success ? 'recuperado' : 'não recuperado'}</span>
+      </div>
+      <p class="muted">Origem: <strong>${escapeHtml(result.source_label)}</strong> · Recuperado: <strong>${escapeHtml(result.recovered_label)}</strong> · Iterações: <strong>${result.iterations}</strong> · Pixels alterados: <strong>${result.flipped_pixels}</strong></p>
+      <div class="image-row">
+        <div class="image-box"><strong>Imagem transmitida</strong></div>
+        <div class="image-box"><strong>Imagem distorcida</strong></div>
+        <div class="image-box"><strong>Imagem limpa recuperada</strong></div>
+      </div>
+    `;
+
+    const boxes = card.querySelectorAll('.image-box');
+    boxes[0].appendChild(renderPixelGrid(result.transmitted_grid));
+    boxes[1].appendChild(renderPixelGrid(result.distorted_grid));
+    boxes[2].appendChild(renderPixelGrid(result.recovered_grid));
+    container.appendChild(card);
+  });
+}
+
+function renderNoiseTable(data) {
+  const rows = data.summary.noise_experiment.map(row => `
+    <tr>
+      <td>${row.noise_percent}%</td>
+      <td>${row.tests}</td>
+      <td>${row.successes}</td>
+      <td>${percent(row.accuracy)}</td>
+      <td>${row.average_final_distance}</td>
+      <td>${row.average_iterations}</td>
+    </tr>
+  `).join('');
+
+  document.getElementById('noise-table').innerHTML = `
+    <h2>Efeito do Aumento do Ruído</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Ruído</th>
+          <th>Testes</th>
+          <th>Acertos</th>
+          <th>Acurácia</th>
+          <th>Distância final média</th>
+          <th>Iterações médias</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+}
+
+function renderAnswers(data) {
+  document.getElementById('answers-card').innerHTML = `
+    <h2>Respostas Geradas</h2>
+    <h3>1. Simulação das 12 situações</h3>
+    <p>${escapeHtml(data.answers.question_1)}</p>
+    <h3>2. Imagens distorcidas e recuperadas</h3>
+    <p>${escapeHtml(data.answers.question_2)}</p>
+    <h3>3. Aumento excessivo do nível de ruído</h3>
+    <p>${escapeHtml(data.answers.question_3)}</p>
+    <div class="math">W = Σ xᵖ(xᵖ)ᵀ, com diagonal principal igual a zero.
+A ativação bipolar aproxima tanh(βu) quando β é muito grande.</div>
+  `;
+}
+
+function renderPage(data) {
+  renderKpis(data);
+  renderNetwork(data);
+  renderTransmissionTable(data);
+  renderCases(data);
+  renderNoiseTable(data);
+  renderAnswers(data);
+  drawLineChart('accuracy-chart', data.summary.noise_experiment, 'accuracy', 'Acurácia');
+  drawLineChart('distance-chart', data.summary.noise_experiment, 'average_final_distance', 'Distância média');
+}
+
+if (typeof RESULTS === 'undefined') {
+  document.querySelector('main').innerHTML = `
+    <div class="card">
+      <h2>Arquivo results.js não encontrado</h2>
+      <p class="muted">Execute <strong>python extract_data.py</strong> e depois <strong>python hopfield.py</strong>. Em seguida, mantenha <strong>index.html</strong> e <strong>results.js</strong> na mesma pasta e abra o HTML novamente.</p>
+    </div>
+  `;
+} else {
+  renderPage(RESULTS);
+}
+
+</script>
+</body>
+</html>
