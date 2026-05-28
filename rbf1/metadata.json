@@ -1,0 +1,22 @@
+{
+  "problema": "RBF - Classificação de Radiação em Compostos Nucleares",
+  "entradas": [
+    "x1",
+    "x2"
+  ],
+  "saida": "y (presença=1 / ausência=-1 de radiação)",
+  "topologia": {
+    "entradas": 2,
+    "neuronios_rbf": 2,
+    "saidas": 1
+  },
+  "algoritmo_camada_oculta": "K-means (K=2, apenas padrões com presença de radiação)",
+  "algoritmo_camada_saida": "Regra Delta Generalizada",
+  "funcao_ativacao_oculta": "Gaussiana (RBF)",
+  "funcao_ativacao_saida": "Linear",
+  "pos_processamento": "Função Sinal (sign): y>=0 -> 1, y<0 -> -1",
+  "taxa_aprendizado": 0.01,
+  "precisao": 1e-07,
+  "amostras_treinamento": 40,
+  "amostras_teste": 10
+}

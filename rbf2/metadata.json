@@ -1,0 +1,29 @@
+{
+  "problema": "Rede RBF - Sistema de Injeção Eletrônica de Combustível",
+  "entradas": [
+    "x1",
+    "x2",
+    "x3"
+  ],
+  "saida": "y (quantidade de gasolina a ser injetada)",
+  "topologias": [
+    {
+      "nome": "Rede 1",
+      "N1": 5
+    },
+    {
+      "nome": "Rede 2",
+      "N1": 10
+    },
+    {
+      "nome": "Rede 3",
+      "N1": 15
+    }
+  ],
+  "algoritmo_camada_oculta": "K-means",
+  "algoritmo_camada_saida": "Regra Delta (Modo Batch)",
+  "taxa_aprendizado": 0.01,
+  "precisao": 1e-07,
+  "num_treinamentos_por_topologia": 3,
+  "pesos_iniciais": "aleatorios entre 0 e 1"
+}

@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados do Trabalho RBF1 - Redes de Função de Base Radial</title>
+    
+    <!-- Google Fonts: Inter para o texto principal, JetBrains Mono para números e códigos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #0D1117;
+            --card-bg: #161B22;
+            --border-color: #30363D;
+            --text-main: #E6EDF3;
+            --text-secondary: #8B949E;
+            --primary-color: #58A6FF;
+            --primary-glow: rgba(88, 166, 255, 0.15);
+            --success-color: #81C784;
+            --success-neon: #39FF14;
+            --success-bg: rgba(129, 199, 132, 0.1);
+            --error-color: #F85149;
+            --error-bg: rgba(248, 81, 73, 0.1);
+            --highlight-color: #FFB74D;
+            --highlight-bg: rgba(255, 183, 77, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 50px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1050px;
+            width: 100%;
+        }
+
+        /* Cabeçalho Premium */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+            border-radius: 2px;
+        }
+
+        .tag-disciplina {
+            display: inline-block;
+            background-color: rgba(88, 166, 255, 0.1);
+            color: var(--primary-color);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid rgba(88, 166, 255, 0.2);
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #FFFFFF 0%, #A5C2F4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 25px auto;
+            font-weight: 400;
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            background: rgba(22, 27, 34, 0.5);
+            padding: 12px 25px;
+            border-radius: 30px;
+            width: fit-content;
+            margin: 0 auto;
+            border: 1px solid var(--border-color);
+        }
+
+        .meta-item strong {
+            color: var(--text-main);
+        }
+
+        /* Cards Principais */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 35px;
+            margin-bottom: 35px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 20px var(--primary-glow);
+            border-color: rgba(88, 166, 255, 0.3);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), transparent);
+            opacity: 0.7;
+        }
+
+        .card.card-success::before {
+            background: linear-gradient(90deg, var(--success-color), transparent);
+        }
+
+        .card.card-highlight::before {
+            background: linear-gradient(90deg, var(--highlight-color), transparent);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h2 span.num {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--primary-color);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 700;
+            border: 1px solid rgba(88, 166, 255, 0.2);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        /* Mídia e Imagens */
+        .image-wrapper {
+            background: #090D13;
+            border-radius: 12px;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            margin: 25px 0;
+            position: relative;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+            margin: 0 auto;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-caption {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Estruturas de Duas Colunas */
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        @media (max-width: 850px) {
+            .grid-2col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Tabelas Customizadas */
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: rgba(9, 13, 19, 0.6);
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: rgba(22, 27, 34, 0.9);
+            color: var(--text-main);
+            font-weight: 600;
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-family: 'Inter', sans-serif;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .highlight-val {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Status Badges */
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-success {
+            background-color: var(--success-bg);
+            color: var(--success-color);
+            border: 1px solid rgba(129, 199, 132, 0.2);
+        }
+
+        .badge-error {
+            background-color: var(--error-bg);
+            color: var(--error-color);
+            border: 1px solid rgba(248, 81, 73, 0.2);
+        }
+
+        /* Textos de Respostas / Justificativas */
+        .answer-block {
+            background: rgba(88, 166, 255, 0.03);
+            border-left: 4px solid var(--primary-color);
+            padding: 24px;
+            border-radius: 0 12px 12px 0;
+            margin: 25px 0;
+        }
+
+        .answer-block.success {
+            background: rgba(129, 199, 132, 0.02);
+            border-left-color: var(--success-color);
+        }
+
+        .answer-block.highlight {
+            background: rgba(255, 183, 77, 0.02);
+            border-left-color: var(--highlight-color);
+        }
+
+        .answer-block h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .answer-block p {
+            margin-bottom: 0;
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .answer-block ul {
+            margin-top: 12px;
+            padding-left: 20px;
+        }
+
+        .answer-block li {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+
+        .answer-block li strong {
+            color: var(--text-main);
+        }
+
+        /* Lista de Estratégias em Grid */
+        .strategies-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .strategy-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .strategy-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(88, 166, 255, 0.2);
+        }
+
+        .strategy-num {
+            background: rgba(88, 166, 255, 0.1);
+            color: var(--primary-color);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 1.1rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1px solid rgba(88, 166, 255, 0.2);
+        }
+
+        .strategy-content h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .strategy-content p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+
+        /* Destaques de Taxa de Acerto */
+        .accuracy-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, rgba(88, 166, 255, 0.1) 0%, rgba(129, 199, 132, 0.1) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-top: 25px;
+        }
+
+        .accuracy-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .accuracy-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .accuracy-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--success-color);
+            text-shadow: 0 0 15px rgba(129, 199, 132, 0.3);
+            display: flex;
+            align-items: baseline;
+        }
+
+        .accuracy-value span {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-left: 2px;
+        }
+
+        /* Topologia Ilustração */
+        .topology-desc {
+            font-size: 0.95rem;
+            background: rgba(22, 27, 34, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-top: 15px;
+            color: var(--text-secondary);
+        }
+
+        .topology-desc strong {
+            color: var(--text-main);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Cabeçalho Principal -->
+        <header>
+            <div class="tag-disciplina">Laboratório de Inteligência Artificial</div>
+            <h1>Classificação de Radiação Nuclear com RBF</h1>
+            <div class="subtitle">Relatório técnico com os resultados do treinamento e validação da Rede de Função de Base Radial (RBF) para detecção de radiação nuclear.</div>
+            
+            <div class="meta-info">
+                <div class="meta-item">Aluno: <strong>Nicolas Gabriel</strong></div>
+                <div class="meta-item">Professor: <strong>Lázaro Eduardo da Silva</strong></div>
+                <div class="meta-item">Data: <strong>20/05/2026</strong></div>
+                <div class="meta-item">Instituição: <strong>CEFET-MG Campus VIII</strong></div>
+            </div>
+        </header>
+
+        <!-- Descrição do Problema -->
+        <div class="card">
+            <h2><span class="num">00</span>O Problema & Topologia da Rede</h2>
+            <p>O objetivo deste trabalho é desenvolver uma rede RBF (Radial Basis Function) para classificar a presença ou ausência de sinais de radiação em compostos nucleares com base em duas variáveis de concentração, denotadas por <strong>x₁</strong> e <strong>x₂</strong>. A base de dados conta com 50 situações conhecidas (Anexo do documento) para treinamento e 10 amostras separadas para o conjunto de testes.</p>
+            
+            <div class="topology-desc">
+                <strong>Configuração da Rede RBF:</strong>
+                <ul>
+                    <li><strong>Camada de Entrada:</strong> 2 neurônios (recebem as concentrações $x_1$ e $x_2$).</li>
+                    <li><strong>Camada Oculta:</strong> 2 neurônios com funções de ativação Gaussianas ($\phi_1$ e $\phi_2$) cujos centros foram posicionados usando o algoritmo <em>K-means</em>.</li>
+                    <li><strong>Camada de Saída:</strong> 1 neurônio linear com um termo de polarização (bias), ajustado pela <em>Regra Delta Generalizada</em>.</li>
+                    <li><strong>Saída Desejada (d):</strong> <span class="highlight-val">+1</span> para Presença de radiação, e <span class="highlight-val">-1</span> para Ausência de radiação.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- CARD 1: K-means -->
+        <div class="card">
+            <h2><span class="num">01</span>Item 1 — Treinamento da Camada Oculta (K-means)</h2>
+            <p>O treinamento da camada oculta foi executado através do algoritmo <strong>K-means</strong> com $K=2$. Conforme instruído no enunciado, os centros dos dois clusters foram calculados levando-se em consideração <strong>apenas</strong> os padrões do conjunto de treinamento que apresentam presença de radiação ($d = 1$). A variância ($\sigma^2$) de cada cluster foi computada como a variância média das distâncias euclidianas dos pontos em relação aos seus respectivos centros.</p>
+            
+            <div class="grid-2col">
+                <div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Cluster</th>
+                                    <th>Centro Coordenadas (x₁, x₂)</th>
+                                    <th>Variância (σ²)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong style="color: #4FC3F7;">Cluster 1</strong></td>
+                                    <td class="font-mono highlight-val">(0.3990, 0.1571)</td>
+                                    <td class="font-mono">0.038460</td>
+                                </tr>
+                                <tr>
+                                    <td><strong style="color: #81C784;">Cluster 2</strong></td>
+                                    <td class="font-mono highlight-val">(0.1648, 0.6121)</td>
+                                    <td class="font-mono">0.029806</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="answer-block">
+                        <h4>Ativação da Camada Oculta</h4>
+                        <p>A ativação de cada neurônio oculto $j$ para uma dada entrada $\mathbf{x} = [x_1, x_2]^T$ é dada pela função Gaussiana:
+                        <br><br>
+                        <code class="font-mono" style="color: var(--primary-color); display: block; text-align: center; font-size: 1.05rem;">φ_j(x) = exp( - ||x - c_j||² / (2 * σ_j²) )</code>
+                        <br>
+                        Onde $\mathbf{c}_j$ representa o centro de coordenadas do cluster $j$ e $\sigma_j^2$ é a variância associada.</p>
+                    </div>
+                </div>
+                <div class="image-wrapper">
+                    <img src="item1_clusters_kmeans.png" alt="Distribuição dos Clusters e Padrões K-means">
+                    <div class="image-caption">Distribuição espacial dos dados d=1 (verde e azul) e os centros calculados pelo K-means (estrelas brancas).</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 2: Regra Delta -->
+        <div class="card">
+            <h2><span class="num">02</span>Item 2 — Treinamento da Camada de Saída (Regra Delta)</h2>
+            <p>Após o mapeamento espacial realizado pela camada intermediária, os pesos do neurônio linear da camada de saída foram ajustados através da <strong>Regra Delta Generalizada</strong>. O processo utilizou uma taxa de aprendizado de $\eta = 0.01$ e um limiar de precisão de $\varepsilon = 10^{-7}$. 
+            O critério de parada foi revisado e implementado de forma <strong>baseada na diferença consecutiva do EQM</strong> ($|EQM(t) - EQM(t-1)| < \varepsilon$), que é o padrão correto para convergência de modelos lineares com erros mínimos assintóticos não nulos nesta disciplina (assim como no ADALINE). O algoritmo convergiu com sucesso em <strong>8.899 épocas</strong>.</p>
+            
+            <div class="grid-2col">
+                <div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Peso</th>
+                                    <th>Neurônio de Origem</th>
+                                    <th>Valor Ajustado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="font-mono">W₂₁,₀ (bias)</td>
+                                    <td>Termo de Polarização</td>
+                                    <td class="font-mono highlight-val">-0.984982</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-mono">W₂₁,₁</td>
+                                    <td>Neurônio Oculto 1 (Cluster 1)</td>
+                                    <td class="font-mono highlight-val">+2.677336</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-mono">W₂₁,₂</td>
+                                    <td>Neurônio Oculto 2 (Cluster 2)</td>
+                                    <td class="font-mono highlight-val">+2.318436</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="answer-block highlight">
+                        <h4>Métricas de Treinamento</h4>
+                        <p>O treinamento atingiu a convergência das atualizações de pesos com os seguintes parâmetros finais:</p>
+                        <ul>
+                            <li><strong>Número de épocas percorridas:</strong> <span class="highlight-val">8.899</span> épocas (em vez de estourar 100.000 iterações)</li>
+                            <li><strong>Erro Quadrático Médio (EQM) final:</strong> <span class="highlight-val">0.117224</span></li>
+                            <li>A convergência do EQM em escala logarítmica demonstra a suavidade e estabilidade do aprendizado até a saturação assintótica do mínimo global da superfície de erro quadrática.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="image-wrapper">
+                    <img src="item2_pesos_convergencia.png" alt="Curva de Convergência do EQM e Pesos">
+                    <div class="image-caption">Curva de convergência do Erro Quadrático Médio (escala logarítmica) e resumo dos pesos ajustados.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 3: Pós-processamento -->
+        <div class="card">
+            <h2><span class="num">03</span>Item 3 — Pós-processamento (Função Sinal)</h2>
+            <p>Por se tratar de um problema de classificação binária (presença vs ausência de radiação), a saída real $y$ fornecida pelo neurônio linear precisa ser convertida em um rótulo de classe discreto ($+1$ ou $-1$). Para isso, foi implementada uma função de pós-processamento baseada na <strong>Função Sinal (sign)</strong>, conforme especificado na fórmula abaixo:</p>
+            
+            <div class="grid-2col">
+                <div>
+                    <div class="answer-block success">
+                        <h4>Regra de Decisão do Pós-processamento</h4>
+                        <p>A mapeamento de pós-processamento atua como o limiar decisório na saída da rede:
+                        <br><br>
+                        <code class="font-mono" style="color: var(--success-color); display: block; text-align: center; font-size: 1.1rem; background: rgba(0, 0, 0, 0.2); padding: 12px; border-radius: 8px;">
+                            y_pós = sign(y) = {  1, se y &ge; 0<br>
+                                              &nbsp;&nbsp;-1, se y &lt; 0
+                        </code>
+                        <br>
+                        Essa função atua aplicando um limiar em zero sobre o valor contínuo $y = w_{21,0} + w_{21,1}\phi_1(\mathbf{x}) + w_{21,2}\phi_2(\mathbf{x})$.</p>
+                    </div>
+                    <p style="font-size: 0.95rem; margin-top: 10px;">Como pode ser visto na tabela ao lado e no gráfico, as saídas contínuas da rede que ficam acima ou em zero são associadas a $1$ (Presença), enquanto as saídas negativas são associadas a $-1$ (Ausência).</p>
+                </div>
+                <div class="image-wrapper">
+                    <img src="item3_pos_processamento.png" alt="Função Sinal Aplicada">
+                    <div class="image-caption">Visualização da função sinal mapeando as saídas contínuas da rede em rótulos discretos de classe (+1 ou -1).</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 4: Validação -->
+        <div class="card card-success">
+            <h2><span class="num">04</span>Item 4 — Validação da Rede (Conjunto de Teste)</h2>
+            <p>A validação do modelo foi realizada aplicando as 10 amostras inéditas contidas no conjunto de teste. Para cada amostra, foi calculada a ativação da camada oculta, a saída linear correspondente ($y$) e o valor pós-processado ($y_{\text{pós}}$) para verificação do acerto em relação ao valor desejado ($d$).</p>
+            
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Amostra</th>
+                            <th>Entrada x₁</th>
+                            <th>Entrada x₂</th>
+                            <th>Desejado (d)</th>
+                            <th>Saída Rede (y)</th>
+                            <th>Pós-proc (y_pós)</th>
+                            <th>Resultado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-mono">1</td>
+                            <td class="font-mono">0.8705</td>
+                            <td class="font-mono">0.9329</td>
+                            <td class="font-mono" style="color: var(--error-color); font-weight: bold;">-1</td>
+                            <td class="font-mono">-0.9848</td>
+                            <td class="font-mono" style="color: var(--error-color); font-weight: bold;">-1</td>
+                            <td><span class="badge badge-success">✓ OK</span></td>
+                        </tr>
+                        <tr style="background: rgba(248, 81, 73, 0.05);">
+                            <td class="font-mono">2</td>
+                            <td class="font-mono">0.0388</td>
+                            <td class="font-mono">0.2703</td>
+                            <td class="font-mono" style="color: var(--success-color); font-weight: bold;">+1</td>
+                            <td class="font-mono" style="color: var(--error-color); font-weight: bold;">-0.3151</td>
+                            <td class="font-mono" style="color: var(--error-color); font-weight: bold;">-1</td>
+                            <td><span class="badge badge-error">✗ ERRO (Falso Negativo)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="font-mono">3</td>
+                            <td class="font-mono">0.8236</td>
+                            <td class="font-mono">0.4458</td>
+                            <td class="font-mono" style="color: var(--error-color); font-weight: bold;">-1</td>
+                            <td class="font-mono">-0.8970</td>
+                            <td class="font-mono" style="color: var(--error-color); font-weight: bold;">-1</td>
+                            <td><span class="badge badge-success">✓ OK</span></td>
+                        </tr>
+                        <tr style="background: rgba(248, 81, 73, 0.05);">
+                            <td class="font-mono">4</td>
+                            <td class="font-mono">0.7075</td>
+                            <td class="font-mono">0.1502</td>
+                            <td class="font-mono" style="color: var(--success-color); font-weight: bold;">+1</td>
+                            <td class="font-mono" style="color: var(--error-color); font-weight: bold;">-0.2083</td>
+                            <td class="font-mono" style="color: var(--error-color); font-weight: bold;">-1</td>
+                            <td><span class="badge badge-error">✗ ERRO (Falso Negativo)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="font-mono">5</td>
+                            <td class="font-mono">0.9587</td>
+                            <td class="font-mono">0.8663</td>
+                            <td class="font-mono" style="color: var(--error-color); font-weight: bold;">-1</td>
+                            <td class="font-mono">-0.9849</td>
+                            <td class="font-mono" style="color: var(--error-color); font-weight: bold;">-1</td>
+                            <td><span class="badge badge-success">✓ OK</span></td>
+                        </tr>
+                        <tr>
+                            <td class="font-mono">6</td>
+                            <td class="font-mono">0.6115</td>
+                            <td class="font-mono">0.9365</td>
+                            <td class="font-mono" style="color: var(--error-color); font-weight: bold;">-1</td>
+                            <td class="font-mono">-0.9705</td>
+                            <td class="font-mono" style="color: var(--error-color); font-weight: bold;">-1</td>
+                            <td><span class="badge badge-success">✓ OK</span></td>
+                        </tr>
+                        <tr>
+                            <td class="font-mono">7</td>
+                            <td class="font-mono">0.3534</td>
+                            <td class="font-mono">0.3646</td>
+                            <td class="font-mono" style="color: var(--success-color); font-weight: bold;">+1</td>
+                            <td class="font-mono" style="color: var(--success-color); font-weight: bold;">+0.9611</td>
+                            <td class="font-mono" style="color: var(--success-color); font-weight: bold;">+1</td>
+                            <td><span class="badge badge-success">✓ OK</span></td>
+                        </tr>
+                        <tr>
+                            <td class="font-mono">8</td>
+                            <td class="font-mono">0.3268</td>
+                            <td class="font-mono">0.2766</td>
+                            <td class="font-mono" style="color: var(--success-color); font-weight: bold;">+1</td>
+                            <td class="font-mono" style="color: var(--success-color); font-weight: bold;">+1.3192</td>
+                            <td class="font-mono" style="color: var(--success-color); font-weight: bold;">+1</td>
+                            <td><span class="badge badge-success">✓ OK</span></td>
+                        </tr>
+                        <tr>
+                            <td class="font-mono">9</td>
+                            <td class="font-mono">0.6129</td>
+                            <td class="font-mono">0.4518</td>
+                            <td class="font-mono" style="color: var(--error-color); font-weight: bold;">-1</td>
+                            <td class="font-mono">-0.4555</td>
+                            <td class="font-mono" style="color: var(--error-color); font-weight: bold;">-1</td>
+                            <td><span class="badge badge-success">✓ OK</span></td>
+                        </tr>
+                        <tr>
+                            <td class="font-mono">10</td>
+                            <td class="font-mono">0.9948</td>
+                            <td class="font-mono">0.4962</td>
+                            <td class="font-mono" style="color: var(--error-color); font-weight: bold;">-1</td>
+                            <td class="font-mono">-0.9790</td>
+                            <td class="font-mono" style="color: var(--error-color); font-weight: bold;">-1</td>
+                            <td><span class="badge badge-success">✓ OK</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="accuracy-box">
+                <div>
+                    <div class="accuracy-title">Desempenho Geral do Conjunto de Teste</div>
+                    <div class="accuracy-desc">Foram obtidos 8 acertos em 10 amostras inéditas de teste.</div>
+                </div>
+                <div class="accuracy-value">80.0<span>%</span></div>
+            </div>
+
+            <div class="grid-2col" style="margin-top: 30px;">
+                <div class="answer-block success" style="margin: 0;">
+                    <h4>Análise dos Erros (Amostras 2 e 4)</h4>
+                    <p>A rede apresentou erros de <strong>falso negativo</strong> nas amostras 2 e 4. A explicação matemática para isso é muito clara:</p>
+                    <ul style="margin-top: 8px;">
+                        <li><strong>Amostra 2 (0.0388, 0.2703)</strong> e <strong>Amostra 4 (0.7075, 0.1502)</strong> estão muito distantes dos centros de radiação calculados pelo K-means (localizados em $c_1=(0.3990, 0.1571)$ e $c_2=(0.1648, 0.6121)$).</li>
+                        <li>Devido a essa alta distância euclidiana, as ativações das funções Gaussianas ocultas ($\phi_1$ e $\phi_2$) decaem para valores muito próximos a zero.</li>
+                        <li>A saída contínua da rede torna-se então quase exclusivamente dominada pelo bias negativo da camada de saída ($W_{21,0} \approx -0.9850$).</li>
+                        <li>Como resultado, a saída contínua foi negativa ($-0.3151$ e $-0.2083$), e o pós-processamento da função sinal classificou incorretamente as amostras como $-1$ (Ausência).</li>
+                    </ul>
+                </div>
+                <div class="image-wrapper" style="margin: 0;">
+                    <img src="item4_validacao.png" alt="Fronteira de Decisão e Classificações de Teste">
+                    <div class="image-caption">Fronteira de decisão da rede RBF (linha tracejada amarela) separando as regiões de presença (verde) e ausência (marrom) no conjunto de testes.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 5: Estratégias -->
+        <div class="card card-highlight">
+            <h2><span class="num">05</span>Item 5 — Estratégias para Aumento da Taxa de Acerto</h2>
+            <p>Considerando os resultados obtidos e os erros observados no conjunto de validação, foram mapeadas estratégias fundamentais que podem ser adotadas para aumentar a taxa de acerto do classificador RBF.</p>
+            
+            <div class="grid-2col">
+                <div>
+                    <div class="strategies-grid">
+                        <div class="strategy-item">
+                            <div class="strategy-num">01</div>
+                            <div class="strategy-content">
+                                <h4>Aumentar o número de clusters ocultos (K > 2)</h4>
+                                <p>Usar apenas 2 neurônios na camada intermediária limita severamente a flexibilidade da fronteira de decisão. Aumentar o número de clusters ocultos permitiria cobrir o espaço de radiação com mais funções Gaussianas, capturando sub-regiões de densidade menores e reduzindo falsos negativos como as amostras 2 e 4.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="strategy-item">
+                            <div class="strategy-num">02</div>
+                            <div class="strategy-content">
+                                <h4>Executar o K-means em ambas as classes (d = 1 e d = -1)</h4>
+                                <p>Atualmente, o K-means foi executado apenas sobre amostras com radiação ($d=1$). Ao clusterizar também a classe de ausência ($d=-1$) e posicionar Gaussianas nela, a rede terá detectores dedicados para ambas as regiões espaciais, tornando o ajuste dos pesos da camada de saída muito mais robusto e a fronteira muito mais precisa.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="strategy-item">
+                            <div class="strategy-num">03</div>
+                            <div class="strategy-content">
+                                <h4>Otimização da largura das Gaussianas (Variância &sigma;)</h4>
+                                <p>Em vez de usar uma variância fixa baseada na distância média local dos clusters, o parâmetro $\sigma^2$ (a "largura" de cada Gaussiana) pode ser otimizado dinamicamente via gradiente descendente ou validação cruzada (Grid Search) para garantir a cobertura ideal entre os pontos extremos e evitar que decaiam muito rápido a zero.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="strategy-item">
+                            <div class="strategy-num">04</div>
+                            <div class="strategy-content">
+                                <h4>Padronização/Normalização de dados</h4>
+                                <p>Aplicar o mapeamento Z-score ou MinMax de forma padronizada em todos os dados de entrada antes do treino garante que as distâncias calculadas pelo K-means tenham peso proporcional em ambas as dimensões físicas ($x_1$ e $x_2$), eliminando vieses causados pela escala das medições.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="image-wrapper">
+                    <img src="item5_estrategias.png" alt="Estratégias Gráfico">
+                    <div class="image-caption">Gráfico ilustrando a dispersão geral de treinamento e a proposta conceitual das estratégias de otimização de cobertura espacial.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
