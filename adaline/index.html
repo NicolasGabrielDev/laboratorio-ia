@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ADALINE - Resultados</title>
+  <style>
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f5f7fb; color: #1f2937; line-height: 1.55; }
+    header { background: #185a9d; color: #fff; padding: 28px 40px; }
+    header h1 { margin: 0 0 6px; font-size: 1.7rem; }
+    header p { margin: 0; color: rgba(255, 255, 255, .78); }
+    main { max-width: 1100px; margin: 0 auto; padding: 28px 18px 48px; }
+    section { background: #fff; border: 1px solid #dfe6f1; border-radius: 8px; padding: 24px; margin-bottom: 18px; }
+    h2 { margin: 0 0 14px; font-size: 1.1rem; color: #185a9d; }
+    table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    th, td { border-bottom: 1px solid #dfe6f1; padding: 10px; text-align: center; }
+    th { background: #eef4fb; color: #667085; }
+    img { display: block; max-width: 100%; height: auto; border: 1px solid #dfe6f1; border-radius: 8px; margin-top: 14px; background: #fff; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ADALINE</h1>
+    <p>Regra Delta, minimização de EQM e classificação com limiar.</p>
+  </header>
+  <main>
+    <section>
+      <h2>Configuração</h2>
+      <p>Taxa de aprendizagem: <code id="learning-rate">...</code>. Precisão: <code id="precision">...</code>.</p>
+    </section>
+    <section>
+      <h2>Treinamentos</h2>
+      <table>
+        <thead><tr><th>Treinamento</th><th>Épocas</th><th>EQM final</th><th>Pesos finais</th></tr></thead>
+        <tbody id="training-rows"><tr><td colspan="4">Execute <code>python3 adaline.py</code>.</td></tr></tbody>
+      </table>
+    </section>
+    <section>
+      <h2>Imagens geradas</h2>
+      <div class="grid">
+        <img src="q1_treinamentos.png" alt="Tabela dos treinamentos">
+        <img src="q3_eqm.png" alt="Curva de EQM">
+        <img src="q4_classificacao.png" alt="Classificação das amostras">
+        <img src="q5_explicacao.png" alt="Explicação teórica">
+      </div>
+    </section>
+  </main>
+  <script src="results_data.js"></script>
+  <script>
+    const data = window.ADALINE_RESULTS;
+    if (data) {
+      document.getElementById("learning-rate").textContent = data.config.learning_rate;
+      document.getElementById("precision").textContent = data.config.precision;
+      document.getElementById("training-rows").innerHTML = data.trainingResults.map((result) => `
+        <tr>
+          <td>${result.training}</td>
+          <td>${result.epochs}</td>
+          <td>${result.final_eqm.toFixed(8)}</td>
+          <td>${result.final_weights.map((value) => value.toFixed(4)).join(", ")}</td>
+        </tr>
+      `).join("");
+    }
+  </script>
+</body>
+</html>

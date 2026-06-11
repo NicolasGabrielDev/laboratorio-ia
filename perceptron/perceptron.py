@@ -1,7 +1,16 @@
+import json
+import os
 import random
+from pathlib import Path
+
+os.environ.setdefault("MPLCONFIGDIR", "/tmp/matplotlib")
+
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import numpy as np
+
+BASE_DIR = Path(__file__).resolve().parent
+os.chdir(BASE_DIR)
 
 # ─── DADOS ────────────────────────────────────────────────────────────────────
 
@@ -94,6 +103,63 @@ for i, seed in enumerate(seeds):
 # ─── CLASSIFICAR AMOSTRAS DE TESTE ───────────────────────────────────────────
 
 classificacoes = [[classificar(pesos_finais[t], am) for t in range(5)] for am in teste]
+
+training_data = [
+    {
+        "sample": index + 1,
+        "features": sample[:3],
+        "class": sample[3],
+    }
+    for index, sample in enumerate(treinamento)
+]
+test_data = [
+    {
+        "sample": index + 1,
+        "features": sample,
+    }
+    for index, sample in enumerate(teste)
+]
+training_results = [
+    {
+        "training": f"T{index + 1}",
+        "initial_weights": result["wi"],
+        "final_weights": result["wf"],
+        "epochs": result["epocas"],
+    }
+    for index, result in enumerate(resultados)
+]
+classification_results = [
+    {
+        "sample": index + 1,
+        "features": sample,
+        "predictions": {
+            f"T{training_index + 1}": int(prediction)
+            for training_index, prediction in enumerate(predictions)
+        },
+    }
+    for index, (sample, predictions) in enumerate(zip(teste, classificacoes))
+]
+
+with open("training_data.json", "w", encoding="utf-8") as file:
+    json.dump(training_data, file, ensure_ascii=False, indent=2)
+
+with open("test_data.json", "w", encoding="utf-8") as file:
+    json.dump(test_data, file, ensure_ascii=False, indent=2)
+
+with open("training_results.json", "w", encoding="utf-8") as file:
+    json.dump(training_results, file, ensure_ascii=False, indent=2)
+
+with open("classification_results.json", "w", encoding="utf-8") as file:
+    json.dump(classification_results, file, ensure_ascii=False, indent=2)
+
+with open("results_data.js", "w", encoding="utf-8") as file:
+    json_content = json.dumps({
+        "trainingData": training_data,
+        "testData": test_data,
+        "trainingResults": training_results,
+        "classificationResults": classification_results,
+    }, ensure_ascii=False, indent=2)
+    file.write(f"window.PERCEPTRON_RESULTS = {json_content};\n")
 
 # ─── QUESTÕES 1 & 2: Tabela de treinamento ────────────────────────────────────
 
@@ -218,4 +284,5 @@ plt.tight_layout()
 plt.savefig('q5_limitacao.png', dpi=130, bbox_inches='tight')
 plt.close()
 
+print("Arquivos gerados: training_data.json, test_data.json, training_results.json, classification_results.json, results_data.js")
 print("Imagens geradas: q1_q2_treinamento.png, q3_classificacao.png, q4_epocas.png, q5_limitacao.png")

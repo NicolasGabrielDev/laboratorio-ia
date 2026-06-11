@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Perceptron - Resultados</title>
+  <style>
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f5f7fb; color: #1f2937; line-height: 1.55; }
+    header { background: #185a9d; color: #fff; padding: 28px 40px; }
+    header h1 { margin: 0 0 6px; font-size: 1.7rem; }
+    header p { margin: 0; color: rgba(255, 255, 255, .78); }
+    main { max-width: 1100px; margin: 0 auto; padding: 28px 18px 48px; }
+    section { background: #fff; border: 1px solid #dfe6f1; border-radius: 8px; padding: 24px; margin-bottom: 18px; }
+    h2 { margin: 0 0 14px; font-size: 1.1rem; color: #185a9d; }
+    table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    th, td { border-bottom: 1px solid #dfe6f1; padding: 10px; text-align: center; }
+    th { background: #eef4fb; color: #667085; }
+    img { display: block; max-width: 100%; height: auto; border: 1px solid #dfe6f1; border-radius: 8px; margin-top: 14px; background: #fff; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Perceptron Simples</h1>
+    <p>Classificação binária, múltiplas inicializações e análise de convergência.</p>
+  </header>
+  <main>
+    <section>
+      <h2>Treinamentos</h2>
+      <table>
+        <thead><tr><th>Treinamento</th><th>Épocas</th><th>Pesos finais</th></tr></thead>
+        <tbody id="training-rows"><tr><td colspan="3">Execute <code>python3 perceptron.py</code>.</td></tr></tbody>
+      </table>
+    </section>
+    <section>
+      <h2>Classificações</h2>
+      <table>
+        <thead><tr><th>Amostra</th><th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>T5</th></tr></thead>
+        <tbody id="classification-rows"><tr><td colspan="6">Carregando...</td></tr></tbody>
+      </table>
+    </section>
+    <section>
+      <h2>Imagens geradas</h2>
+      <div class="grid">
+        <img src="q1_q2_treinamento.png" alt="Tabela dos treinamentos">
+        <img src="q3_classificacao.png" alt="Classificação das amostras">
+        <img src="q4_epocas.png" alt="Análise de épocas">
+        <img src="q5_limitacao.png" alt="Limitação do Perceptron">
+      </div>
+    </section>
+  </main>
+  <script src="results_data.js"></script>
+  <script>
+    const data = window.PERCEPTRON_RESULTS;
+    if (data) {
+      document.getElementById("training-rows").innerHTML = data.trainingResults.map((result) => `
+        <tr>
+          <td>${result.training}</td>
+          <td>${result.epochs}</td>
+          <td>${result.final_weights.map((value) => value.toFixed(4)).join(", ")}</td>
+        </tr>
+      `).join("");
+      document.getElementById("classification-rows").innerHTML = data.classificationResults.map((result) => `
+        <tr>
+          <td>${result.sample}</td>
+          <td>${result.predictions.T1}</td>
+          <td>${result.predictions.T2}</td>
+          <td>${result.predictions.T3}</td>
+          <td>${result.predictions.T4}</td>
+          <td>${result.predictions.T5}</td>
+        </tr>
+      `).join("");
+    }
+  </script>
+</body>
+</html>

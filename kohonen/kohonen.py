@@ -1,6 +1,11 @@
 import json
 import math
+import os
 import random
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+os.chdir(BASE_DIR)
 
 GRID_ROWS  = 4
 GRID_COLS  = 4
@@ -99,6 +104,12 @@ def main():
         json.dump(results, f)
         f.write(";")
     print("Saved results.js")
+
+    with open("results_data.js", "w", encoding="utf-8") as f:
+        f.write("window.KOHONEN_RESULTS = ")
+        json.dump(results, f, ensure_ascii=False, indent=2)
+        f.write(";\n")
+    print("Saved results_data.js")
 
     print("\n── Test Classification ──")
     for s in classified_test:

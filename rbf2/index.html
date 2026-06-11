@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RBF2 - Resultados</title>
+  <style>
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f5f7fb; color: #1f2937; line-height: 1.55; }
+    header { background: #185a9d; color: #fff; padding: 28px 40px; }
+    header h1 { margin: 0 0 6px; font-size: 1.7rem; }
+    header p { margin: 0; color: rgba(255, 255, 255, .78); }
+    main { max-width: 1100px; margin: 0 auto; padding: 28px 18px 48px; }
+    section { background: #fff; border: 1px solid #dfe6f1; border-radius: 8px; padding: 24px; margin-bottom: 18px; }
+    h2 { margin: 0 0 14px; font-size: 1.1rem; color: #185a9d; }
+    img { display: block; max-width: 100%; height: auto; border: 1px solid #dfe6f1; border-radius: 8px; margin-top: 14px; background: #fff; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; }
+    code { background: #eef4fb; border-radius: 4px; padding: 2px 5px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>RBF2 - Rede de Função de Base Radial</h1>
+    <p>Resultados consolidados a partir dos JSONs e imagens gerados pelo experimento.</p>
+  </header>
+  <main>
+    <section>
+      <h2>Arquivos de dados</h2>
+      <p>Os resultados completos estão em <code>training_results.json</code> e <code>validation_results.json</code>. Esta página usa <code>results_data.js</code> como manifesto local dos artefatos.</p>
+    </section>
+    <section>
+      <h2>Imagens geradas</h2>
+      <div class="grid" id="image-grid"></div>
+    </section>
+  </main>
+  <script src="results_data.js"></script>
+  <script>
+    const data = window.RBF2_RESULTS;
+    if (data) {
+      document.getElementById("image-grid").innerHTML = data.outputs.map((image) => (
+        `<img src="${image}" alt="${image}">`
+      )).join("");
+    }
+  </script>
+</body>
+</html>

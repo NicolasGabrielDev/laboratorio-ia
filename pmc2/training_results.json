@@ -3,7 +3,7 @@
     "method": "Backpropagation Padrao",
     "epochs": 50000,
     "final_eqm": 0.00025993310657953925,
-    "time_seconds": 207.1337,
+    "time_seconds": 100.4797,
     "eqm_per_epoch": [
       0.9955229423045248,
       0.9941334938399713,
@@ -50011,7 +50011,7 @@
     "method": "Backpropagation com Momentum",
     "epochs": 50000,
     "final_eqm": 7.495019835850066e-05,
-    "time_seconds": 222.9556,
+    "time_seconds": 109.3587,
     "eqm_per_epoch": [
       0.9949339958023555,
       0.9886853821447609,

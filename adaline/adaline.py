@@ -1,5 +1,14 @@
+import json
+import os
+from pathlib import Path
+
+os.environ.setdefault("MPLCONFIGDIR", "/tmp/matplotlib")
+
 import numpy as np
 import matplotlib.pyplot as plt
+
+BASE_DIR = Path(__file__).resolve().parent
+os.chdir(BASE_DIR)
 
 # ─── DADOS ────────────────────────────────────────────────────────────────────
 
@@ -101,6 +110,33 @@ for t in range(5):
     resultados.append({'wi': wi, 'wf': wf, 'epocas': ep})
     historicos.append(hist)
 
+training_data = [
+    {
+        "sample": index + 1,
+        "features": row[:4].tolist(),
+        "class": float(row[4]),
+    }
+    for index, row in enumerate(treinamento)
+]
+test_data = [
+    {
+        "sample": index + 1,
+        "features": row.tolist(),
+    }
+    for index, row in enumerate(classificacao)
+]
+training_results = [
+    {
+        "training": f"T{index + 1}",
+        "initial_weights": result["wi"].tolist(),
+        "final_weights": result["wf"].tolist(),
+        "epochs": result["epocas"],
+        "eqm_history": [float(value) for value in historicos[index]],
+        "final_eqm": float(historicos[index][-1]),
+    }
+    for index, result in enumerate(resultados)
+]
+
 # ─── Q1: Tabela de treinamentos ───────────────────────────────────────────────
 
 fig, ax = plt.subplots(figsize=(15, 3.5))
@@ -166,6 +202,51 @@ plt.tight_layout()
 plt.savefig('q4_classificacao.png', dpi=130, bbox_inches='tight')
 plt.close()
 
+classification_results = []
+for sample_index, sample in enumerate(classificacao):
+    predictions = {}
+
+    for training_index, result in enumerate(resultados):
+        activation_value = float(result["wf"] @ X_class[sample_index])
+        prediction = 1 if activation_value >= 0 else -1
+        predictions[f"T{training_index + 1}"] = {
+            "activation": activation_value,
+            "class": "B" if prediction == 1 else "A",
+            "numeric_class": prediction,
+        }
+
+    classification_results.append({
+        "sample": sample_index + 1,
+        "features": sample.tolist(),
+        "predictions": predictions,
+    })
+
+with open("training_data.json", "w", encoding="utf-8") as file:
+    json.dump(training_data, file, ensure_ascii=False, indent=2)
+
+with open("test_data.json", "w", encoding="utf-8") as file:
+    json.dump(test_data, file, ensure_ascii=False, indent=2)
+
+with open("training_results.json", "w", encoding="utf-8") as file:
+    json.dump(training_results, file, ensure_ascii=False, indent=2)
+
+with open("classification_results.json", "w", encoding="utf-8") as file:
+    json.dump(classification_results, file, ensure_ascii=False, indent=2)
+
+with open("results_data.js", "w", encoding="utf-8") as file:
+    json_content = json.dumps({
+        "config": {
+            "algorithm": "ADALINE",
+            "learning_rate": 0.0025,
+            "precision": 1e-6,
+        },
+        "trainingData": training_data,
+        "testData": test_data,
+        "trainingResults": training_results,
+        "classificationResults": classification_results,
+    }, ensure_ascii=False, indent=2)
+    file.write(f"window.ADALINE_RESULTS = {json_content};\n")
+
 # ─── Q4: Explicação pesos finais ──────────────────────────────────────────────
 
 fig, ax = plt.subplots(figsize=(10, 4))
@@ -195,4 +276,5 @@ plt.tight_layout()
 plt.savefig('q5_explicacao.png', dpi=130, bbox_inches='tight')
 plt.close()
 
+print("Arquivos gerados: training_data.json, test_data.json, training_results.json, classification_results.json, results_data.js")
 print("Imagens geradas: q1_treinamentos.png, q3_eqm.png, q4_classificacao.png, q5_explicacao.png")

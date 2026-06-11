@@ -2,31 +2,51 @@
   {
     "treinamento": "T1",
     "seed": 42,
-    "eqm_final": 0.001797019149699626,
-    "num_epocas": 50000
+    "eqm_final": 0.0007926522435820076,
+    "num_epocas": 100000,
+    "stop_reason": "max_epochs_reached",
+    "epsilon": 1e-06,
+    "max_epochs": 100000,
+    "learning_rate": 0.1
   },
   {
     "treinamento": "T2",
     "seed": 7,
-    "eqm_final": 0.0009767180285729154,
-    "num_epocas": 50000
+    "eqm_final": 0.0008588172146146519,
+    "num_epocas": 100000,
+    "stop_reason": "max_epochs_reached",
+    "epsilon": 1e-06,
+    "max_epochs": 100000,
+    "learning_rate": 0.1
   },
   {
     "treinamento": "T3",
     "seed": 2024,
-    "eqm_final": 0.000991123214996545,
-    "num_epocas": 50000
+    "eqm_final": 0.0008753646330623084,
+    "num_epocas": 100000,
+    "stop_reason": "max_epochs_reached",
+    "epsilon": 1e-06,
+    "max_epochs": 100000,
+    "learning_rate": 0.1
   },
   {
     "treinamento": "T4",
     "seed": 314,
-    "eqm_final": 0.0012292850354214205,
-    "num_epocas": 50000
+    "eqm_final": 0.0008639664118113657,
+    "num_epocas": 100000,
+    "stop_reason": "max_epochs_reached",
+    "epsilon": 1e-06,
+    "max_epochs": 100000,
+    "learning_rate": 0.1
   },
   {
     "treinamento": "T5",
     "seed": 99,
-    "eqm_final": 0.0071100401733790175,
-    "num_epocas": 50000
+    "eqm_final": 0.0008129232769115807,
+    "num_epocas": 100000,
+    "stop_reason": "max_epochs_reached",
+    "epsilon": 1e-06,
+    "max_epochs": 100000,
+    "learning_rate": 0.1
   }
 ]

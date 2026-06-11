@@ -1,6 +1,11 @@
 import json
 import math
+import os
 import random
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+os.chdir(BASE_DIR)
 
 TRAINING_DATA_PATH = "training_data.json"
 TEST_DATA_PATH = "test_data.json"
@@ -22,6 +27,13 @@ def save_results_js(path, data):
 
     with open(path, "w", encoding="utf-8") as file:
         file.write(f"var RESULTS = {json_content};\n")
+
+
+def save_results_data_js(path, data):
+    json_content = json.dumps(data, ensure_ascii=False, indent=2)
+
+    with open(path, "w", encoding="utf-8") as file:
+        file.write(f"window.HOPFIELD_RESULTS = {json_content};\n")
 
 
 def sign(value):
@@ -260,6 +272,9 @@ def main():
 
     save_results_js(RESULTS_PATH, results)
     print(f"{RESULTS_PATH} was generated.")
+
+    save_results_data_js("results_data.js", results)
+    print("results_data.js was generated.")
 
 
 if __name__ == "__main__":

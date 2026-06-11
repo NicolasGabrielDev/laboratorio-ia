@@ -9,6 +9,11 @@ Precisao: epsilon = 1e-6
 
 import numpy as np
 import json
+import os
+from pathlib import Path
+
+os.environ.setdefault("MPLCONFIGDIR", "/tmp/matplotlib")
+
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -16,6 +21,12 @@ import matplotlib.gridspec as gridspec
 from matplotlib.patches import FancyBboxPatch
 import warnings
 warnings.filterwarnings('ignore')
+
+BASE_DIR = Path(__file__).resolve().parent
+os.chdir(BASE_DIR)
+LEARNING_RATE = 0.1
+EPSILON = 1e-6
+MAX_EPOCHS = 100000
 
 # ============================================================
 # 1. CARREGAR DADOS
@@ -71,7 +82,7 @@ def eqm(d, out):
 # ============================================================
 # 3. BACKPROPAGATION
 # ============================================================
-def train_mlp(X, d, seed, eta=0.1, epsilon=1e-6, max_epochs=100000):
+def train_mlp(X, d, seed, eta=LEARNING_RATE, epsilon=EPSILON, max_epochs=MAX_EPOCHS):
     rng = np.random.default_rng(seed)
     # Pesos aleatorios entre 0 e 1 (conforme enunciado)
     W1 = rng.uniform(0, 1, (12, 3))
@@ -91,6 +102,7 @@ def train_mlp(X, d, seed, eta=0.1, epsilon=1e-6, max_epochs=100000):
         history.append(eq)
 
         if eq < epsilon:
+            stop_reason = "precision_reached"
             break
 
         # --- Backprop ---
@@ -114,6 +126,8 @@ def train_mlp(X, d, seed, eta=0.1, epsilon=1e-6, max_epochs=100000):
         b1 += eta * delta1.mean(axis=0)
 
         epoch += 1
+    else:
+        stop_reason = "max_epochs_reached"
 
     return {
         'W1': W1, 'b1': b1,
@@ -121,7 +135,8 @@ def train_mlp(X, d, seed, eta=0.1, epsilon=1e-6, max_epochs=100000):
         'W3': W3, 'b3': b3,
         'epochs': epoch,
         'eqm_final': history[-1],
-        'history': history
+        'history': history,
+        'stop_reason': stop_reason
     }
 
 # ============================================================
@@ -133,9 +148,9 @@ results = []
 
 for i, seed in enumerate(seeds):
     print(f"  Treinamento T{i+1} (seed={seed})...", end=' ', flush=True)
-    r = train_mlp(X_train, d_train, seed=seed, eta=0.1, epsilon=1e-6, max_epochs=50000)
+    r = train_mlp(X_train, d_train, seed=seed, eta=LEARNING_RATE, epsilon=EPSILON, max_epochs=MAX_EPOCHS)
     results.append(r)
-    print(f"EQM={r['eqm_final']:.6f}  Epocas={r['epochs']}")
+    print(f"EQM={r['eqm_final']:.6f}  Epocas={r['epochs']}  Parada={r['stop_reason']}")
 
 # ============================================================
 # 5. SALVAR RESULTADOS EM JSON
@@ -146,7 +161,11 @@ for i, r in enumerate(results):
         "treinamento": f"T{i+1}",
         "seed": seeds[i],
         "eqm_final": r['eqm_final'],
-        "num_epocas": r['epochs']
+        "num_epocas": r['epochs'],
+        "stop_reason": r['stop_reason'],
+        "epsilon": EPSILON,
+        "max_epochs": MAX_EPOCHS,
+        "learning_rate": LEARNING_RATE
     })
 
 with open('training_results.json', 'w') as f:
@@ -178,6 +197,21 @@ for i, r in enumerate(results):
 with open('validation_results.json', 'w') as f:
     json.dump(validation, f, indent=2)
 print("Resultados de validacao salvos -> validation_results.json")
+
+with open("results_data.js", "w", encoding="utf-8") as f:
+    json_content = json.dumps({
+        "config": {
+            "algorithm": "PMC1 MLP Backpropagation",
+            "learning_rate": LEARNING_RATE,
+            "epsilon": EPSILON,
+            "max_epochs": MAX_EPOCHS,
+            "topology": "3-12-10-1",
+        },
+        "trainingResults": summary,
+        "validationResults": validation,
+    }, ensure_ascii=False, indent=2)
+    f.write(f"window.PMC1_RESULTS = {json_content};\n")
+print("Dados para HTML salvos -> results_data.js")
 
 # ============================================================
 # 7. ESTILO GLOBAL DOS GRAFICOS
@@ -463,6 +497,7 @@ print(f"\n→ Melhor generalização: T{best_idx+1}")
 print("\nArquivos gerados:")
 for f in ['training_data.json','test_data.json','metadata.json',
           'training_results.json','validation_results.json',
+          'results_data.js',
           'item1_tabela_treinamentos.png','item2_eqm_epocas.png',
           'item4_validacao.png','item5_melhor_config.png',
           'README.md']:

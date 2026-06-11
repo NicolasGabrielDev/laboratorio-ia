@@ -8,8 +8,14 @@ Arquitetura: 4 entradas → 15 neurônios ocultos → 3 saídas
 """
 
 import json
+import os
 import time
+from pathlib import Path
+
 import numpy as np
+
+BASE_DIR = Path(__file__).resolve().parent
+os.chdir(BASE_DIR)
 
 # ─────────────────────────────────────────────
 # Semente para reprodutibilidade dos pesos iniciais
@@ -238,3 +244,19 @@ validation_results = {
 with open("validation_results.json", "w") as f:
     json.dump(validation_results, f, indent=2)
 print("validation_results.json salvo")
+
+with open("results_data.js", "w", encoding="utf-8") as f:
+    json_content = json.dumps({
+        "config": {
+            "algorithm": "PMC2 MLP Backpropagation",
+            "learning_rate": LR,
+            "momentum": BETA,
+            "epsilon": EPS,
+            "max_epochs": MAX_EP,
+            "topology": "4-15-3",
+        },
+        "trainingResults": training_results,
+        "validationResults": validation_results,
+    }, ensure_ascii=False, indent=2)
+    f.write(f"window.PMC2_RESULTS = {json_content};\n")
+print("results_data.js salvo")
