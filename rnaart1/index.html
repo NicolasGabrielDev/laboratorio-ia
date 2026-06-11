@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ART-1 - Agrupamento de Situações Industriais</title>
+  <style>
+    :root {
+      --background: #f5f7fb;
+      --surface: #ffffff;
+      --border: #dfe6f1;
+      --text: #1f2937;
+      --muted: #667085;
+      --primary: #185a9d;
+      --accent: #2f9e44;
+      --danger: #b42318;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    header {
+      background: var(--primary);
+      color: #ffffff;
+      padding: 28px 40px;
+    }
+    header h1 {
+      margin: 0 0 6px;
+      font-size: 1.7rem;
+    }
+    header p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.78);
+    }
+    main {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 28px 18px 48px;
+    }
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+    h2 {
+      margin: 0 0 14px;
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+    h3 {
+      margin: 22px 0 10px;
+      color: var(--muted);
+      font-size: .95rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+    }
+    .metric {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      background: #fbfdff;
+    }
+    .metric strong {
+      display: block;
+      font-size: 1.45rem;
+      color: var(--primary);
+    }
+    .metric span {
+      color: var(--muted);
+      font-size: .9rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      font-size: .92rem;
+      margin-top: 8px;
+    }
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 10px;
+      text-align: center;
+      vertical-align: top;
+    }
+    th {
+      background: #eef4fb;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-top: 14px;
+      background: #ffffff;
+    }
+    .answer {
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      background: #f1f8f3;
+      border-radius: 6px;
+    }
+    .error {
+      border-left-color: var(--danger);
+      background: #fff1f0;
+      color: var(--danger);
+    }
+    code {
+      background: #eef4fb;
+      border-radius: 4px;
+      padding: 2px 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ART-1 - Agrupamento de situações industriais</h1>
+    <p>Classificação de vetores binários para diferentes graus de vigilância.</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>Configuração utilizada</h2>
+      <p>A rede ART-1 foi simulada com aprendizagem rápida. Cada situação é comparada com as categorias existentes; se o protótipo vencedor atende ao grau de vigilância, a situação é agrupada nessa classe. Caso contrário, uma nova classe é criada.</p>
+      <div class="metrics">
+        <div class="metric"><strong id="metric-situations">...</strong><span>Situações analisadas</span></div>
+        <div class="metric"><strong id="metric-variables">...</strong><span>Variáveis binárias</span></div>
+        <div class="metric"><strong id="metric-vigilance">...</strong><span>Graus de vigilância</span></div>
+        <div class="metric"><strong id="metric-alpha">...</strong><span>Alpha da função de escolha</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Classes ativas por vigilância</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Vigilância</th>
+            <th>Classes ativas</th>
+            <th>Agrupamentos</th>
+          </tr>
+        </thead>
+        <tbody id="summary-rows">
+          <tr><td colspan="3">Carregando dados...</td></tr>
+        </tbody>
+      </table>
+      <img src="art1_active_categories.png" alt="Gráfico de classes ativas por grau de vigilância">
+    </section>
+
+    <section>
+      <h2>Agrupamentos detalhados</h2>
+      <div id="simulation-details">Carregando dados...</div>
+      <img src="art1_group_sizes.png" alt="Gráfico de tamanho dos agrupamentos ART-1">
+    </section>
+
+    <section>
+      <h2>Resposta</h2>
+      <div class="answer" id="answer">
+        <p>Carregando resposta...</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="results_data.js"></script>
+  <script>
+    const numberFormat = new Intl.NumberFormat("pt-BR", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 4
+    });
+
+    function formatNumber(value) {
+      return numberFormat.format(value);
+    }
+
+    function setText(id, value) {
+      document.getElementById(id).textContent = value;
+    }
+
+    function groupText(groups) {
+      return groups
+        .map((group) => `C${group.category}: situações ${group.situations.join(", ")}`)
+        .join("; ");
+    }
+
+    function renderMetrics(results) {
+      setText("metric-situations", results.training_data.length);
+      setText("metric-variables", results.config.variables.length);
+      setText("metric-vigilance", results.config.vigilance_values.join(", "));
+      setText("metric-alpha", formatNumber(results.config.choice_alpha));
+    }
+
+    function renderSummary(results) {
+      const rows = results.summary.map((item) => `
+        <tr>
+          <td>${formatNumber(item.vigilance)}</td>
+          <td>${item.active_category_count}</td>
+          <td>${groupText(item.groups)}</td>
+        </tr>
+      `);
+
+      document.getElementById("summary-rows").innerHTML = rows.join("");
+    }
+
+    function renderSimulationDetails(results) {
+      const details = results.simulations.map((simulation) => {
+        const groupRows = simulation.groups.map((group) => `
+          <tr>
+            <td>C${group.category}</td>
+            <td>${group.situations.join(", ")}</td>
+            <td>${group.active_features}</td>
+            <td>${group.prototype.join(" ")}</td>
+          </tr>
+        `).join("");
+
+        return `
+          <h3>Vigilância ${formatNumber(simulation.vigilance)}</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Classe</th>
+                <th>Situações agrupadas</th>
+                <th>Bits ativos no protótipo</th>
+                <th>Protótipo final</th>
+              </tr>
+            </thead>
+            <tbody>${groupRows}</tbody>
+          </table>
+        `;
+      });
+
+      document.getElementById("simulation-details").innerHTML = details.join("");
+    }
+
+    function renderAnswer(results) {
+      const paragraphs = results.summary.map((item) => (
+        `<p>Para vigilância ${formatNumber(item.vigilance)}, ficaram ativas ${item.active_category_count} classes: ${groupText(item.groups)}.</p>`
+      ));
+
+      paragraphs.push("<p>Quanto maior o grau de vigilância, mais rigorosa é a comparação entre uma situação e o protótipo da classe. Por isso, valores maiores tendem a criar mais classes e agrupamentos menores.</p>");
+
+      document.getElementById("answer").innerHTML = paragraphs.join("");
+    }
+
+    function loadResults() {
+      const results = window.ART1_RESULTS;
+
+      if (!results) {
+        document.getElementById("summary-rows").innerHTML = "<tr><td colspan=\"3\">Erro ao carregar os dados gerados.</td></tr>";
+        document.getElementById("simulation-details").textContent = "Erro ao carregar os dados gerados.";
+        const answer = document.getElementById("answer");
+        answer.classList.add("error");
+        answer.innerHTML = "<p>Não foi possível ler <code>results_data.js</code>. Execute <code>python3 art1.py</code> antes de abrir esta página.</p>";
+        return;
+      }
+
+      renderMetrics(results);
+      renderSummary(results);
+      renderSimulationDetails(results);
+      renderAnswer(results);
+    }
+
+    loadResults();
+  </script>
+</body>
+</html>

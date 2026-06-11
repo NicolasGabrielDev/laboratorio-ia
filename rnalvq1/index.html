@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LVQ-1 - Classificação de Perfis de Potência</title>
+  <style>
+    :root {
+      --background: #f5f7fb;
+      --surface: #ffffff;
+      --border: #dfe6f1;
+      --text: #1f2937;
+      --muted: #667085;
+      --primary: #185a9d;
+      --accent: #2f9e44;
+      --danger: #b42318;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    header {
+      background: var(--primary);
+      color: #ffffff;
+      padding: 28px 40px;
+    }
+    header h1 {
+      margin: 0 0 6px;
+      font-size: 1.7rem;
+    }
+    header p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.78);
+    }
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 28px 18px 48px;
+    }
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+    h2 {
+      margin: 0 0 14px;
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .metric {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      background: #fbfdff;
+    }
+    .metric strong {
+      display: block;
+      font-size: 1.45rem;
+      color: var(--primary);
+    }
+    .metric span {
+      color: var(--muted);
+      font-size: .9rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      font-size: .92rem;
+    }
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background: #eef4fb;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    tr:last-child td { border-bottom: 0; }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-top: 14px;
+      background: #ffffff;
+    }
+    .answer {
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      background: #f1f8f3;
+      border-radius: 6px;
+    }
+    .error {
+      border-left-color: var(--danger);
+      background: #fff1f0;
+      color: var(--danger);
+    }
+    code {
+      background: #eef4fb;
+      border-radius: 4px;
+      padding: 2px 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>LVQ-1 - Classificação de perfis de potência elétrica</h1>
+    <p>Resultados carregados dos arquivos JSON gerados pelo script Python.</p>
+  </header>
+  <main>
+    <section>
+      <h2>Configuração utilizada</h2>
+      <p>A rede LVQ-1 foi inicializada com o centróide de cada classe como protótipo inicial. Em cada época, o protótipo vencedor é aproximado da amostra quando a classe coincide e afastado quando a classe é diferente. A taxa de aprendizagem inicial foi <code id="learning-rate">...</code>, com decaimento linear ao longo de <span id="epochs">...</span> épocas.</p>
+    </section>
+
+    <section>
+      <h2>Resumo do treinamento</h2>
+      <div class="metrics">
+        <div class="metric"><strong id="metric-epochs">...</strong><span>Épocas</span></div>
+        <div class="metric"><strong id="metric-error">...</strong><span>Erro médio quadrático final</span></div>
+        <div class="metric"><strong id="metric-accuracy">...</strong><span>Acurácia no conjunto de treino</span></div>
+        <div class="metric"><strong id="metric-classes">...</strong><span>Classes de demanda</span></div>
+      </div>
+      <img src="lvq1_training_error.png" alt="Gráfico do erro médio quadrático por época">
+    </section>
+
+    <section>
+      <h2>Classificação dos dias de teste</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Dia</th>
+            <th>7h</th>
+            <th>8h</th>
+            <th>9h</th>
+            <th>10h</th>
+            <th>11h</th>
+            <th>12h</th>
+            <th>Classe prevista</th>
+            <th>Distância ao protótipo</th>
+          </tr>
+        </thead>
+        <tbody id="classification-rows">
+          <tr><td colspan="9">Carregando dados...</td></tr>
+        </tbody>
+      </table>
+      <img src="lvq1_test_profiles.png" alt="Perfis dos dias de teste classificados pela LVQ-1">
+    </section>
+
+    <section>
+      <h2>Resposta</h2>
+      <div class="answer" id="answer">
+        <p>Carregando resposta...</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="results_data.js"></script>
+  <script>
+    const numberFormat = new Intl.NumberFormat("pt-BR", {
+      minimumFractionDigits: 4,
+      maximumFractionDigits: 4
+    });
+
+    function formatNumber(value) {
+      return numberFormat.format(value);
+    }
+
+    function setText(id, value) {
+      document.getElementById(id).textContent = value;
+    }
+
+    function renderMetrics(trainingResults) {
+      const config = trainingResults.config;
+      const summary = trainingResults.summary;
+      const classCount = trainingResults.prototypes.length;
+
+      setText("learning-rate", formatNumber(config.learning_rate));
+      setText("epochs", config.epochs);
+      setText("metric-epochs", config.epochs);
+      setText("metric-error", formatNumber(summary.final_mean_squared_error));
+      setText("metric-accuracy", `${Math.round(summary.training_accuracy * 100)}%`);
+      setText("metric-classes", classCount);
+    }
+
+    function renderClassificationRows(classificationResults) {
+      const rows = classificationResults.map((result) => {
+        const featureCells = result.features
+          .map((value) => `<td>${formatNumber(value)}</td>`)
+          .join("");
+
+        return `
+          <tr>
+            <td>${result.day}</td>
+            ${featureCells}
+            <td>Classe ${result.predicted_class}</td>
+            <td>${formatNumber(result.winner_distance)}</td>
+          </tr>
+        `;
+      });
+
+      document.getElementById("classification-rows").innerHTML = rows.join("");
+    }
+
+    function renderAnswer(classificationResults) {
+      const classifications = classificationResults
+        .map((result) => `dia ${result.day} classe ${result.predicted_class}`)
+        .join(", ");
+
+      document.getElementById("answer").innerHTML = `
+        <p>As classes previstas para os dias de teste são: ${classifications}.</p>
+        <p>O resultado é coerente com os perfis de treino: os dias 1 e 8 têm comportamento próximo da classe 4, os dias 2 e 7 da classe 3, os dias 3 e 6 da classe 2, e os dias 4 e 5 da classe 1.</p>
+      `;
+    }
+
+    function loadResults() {
+      const data = window.LVQ1_RESULTS;
+
+      if (!data) {
+        document.getElementById("classification-rows").innerHTML = `
+          <tr><td colspan="9">Erro ao carregar os dados gerados.</td></tr>
+        `;
+        const answer = document.getElementById("answer");
+        answer.classList.add("error");
+        answer.innerHTML = `
+          <p>Não foi possível ler <code>results_data.js</code>. Execute <code>python3 lvq1.py</code> antes de abrir esta página.</p>
+        `;
+        return;
+      }
+
+      renderMetrics(data.trainingResults);
+      renderClassificationRows(data.classificationResults);
+      renderAnswer(data.classificationResults);
+    }
+
+    loadResults();
+  </script>
+</body>
+</html>

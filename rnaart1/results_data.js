@@ -1,0 +1,1369 @@
+window.ART1_RESULTS = {
+  "config": {
+    "algorithm": "ART-1",
+    "variables": [
+      "x1",
+      "x2",
+      "x3",
+      "x4",
+      "x5",
+      "x6",
+      "x7",
+      "x8",
+      "x9",
+      "x10",
+      "x11",
+      "x12",
+      "x13",
+      "x14",
+      "x15",
+      "x16"
+    ],
+    "vigilance_values": [
+      0.5,
+      0.8,
+      0.9,
+      0.99
+    ],
+    "choice_alpha": 0.001,
+    "learning": "fast_learning_binary_intersection"
+  },
+  "summary": [
+    {
+      "vigilance": 0.5,
+      "active_category_count": 4,
+      "groups": [
+        {
+          "category": 1,
+          "situations": [
+            1,
+            2
+          ]
+        },
+        {
+          "category": 2,
+          "situations": [
+            3,
+            4,
+            8,
+            9
+          ]
+        },
+        {
+          "category": 3,
+          "situations": [
+            5,
+            7,
+            10
+          ]
+        },
+        {
+          "category": 4,
+          "situations": [
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "vigilance": 0.8,
+      "active_category_count": 5,
+      "groups": [
+        {
+          "category": 1,
+          "situations": [
+            1,
+            6
+          ]
+        },
+        {
+          "category": 2,
+          "situations": [
+            2,
+            7
+          ]
+        },
+        {
+          "category": 3,
+          "situations": [
+            3,
+            8
+          ]
+        },
+        {
+          "category": 4,
+          "situations": [
+            4,
+            9
+          ]
+        },
+        {
+          "category": 5,
+          "situations": [
+            5,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "vigilance": 0.9,
+      "active_category_count": 7,
+      "groups": [
+        {
+          "category": 1,
+          "situations": [
+            1,
+            6
+          ]
+        },
+        {
+          "category": 2,
+          "situations": [
+            2
+          ]
+        },
+        {
+          "category": 3,
+          "situations": [
+            3,
+            8
+          ]
+        },
+        {
+          "category": 4,
+          "situations": [
+            4
+          ]
+        },
+        {
+          "category": 5,
+          "situations": [
+            5,
+            10
+          ]
+        },
+        {
+          "category": 6,
+          "situations": [
+            7
+          ]
+        },
+        {
+          "category": 7,
+          "situations": [
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "vigilance": 0.99,
+      "active_category_count": 8,
+      "groups": [
+        {
+          "category": 1,
+          "situations": [
+            1
+          ]
+        },
+        {
+          "category": 2,
+          "situations": [
+            2
+          ]
+        },
+        {
+          "category": 3,
+          "situations": [
+            3,
+            8
+          ]
+        },
+        {
+          "category": 4,
+          "situations": [
+            4
+          ]
+        },
+        {
+          "category": 5,
+          "situations": [
+            5,
+            10
+          ]
+        },
+        {
+          "category": 6,
+          "situations": [
+            6
+          ]
+        },
+        {
+          "category": 7,
+          "situations": [
+            7
+          ]
+        },
+        {
+          "category": 8,
+          "situations": [
+            9
+          ]
+        }
+      ]
+    }
+  ],
+  "training_data": [
+    {
+      "situation": 1,
+      "features": [
+        0,
+        1,
+        0,
+        1,
+        1,
+        0,
+        1,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "active_features": 11
+    },
+    {
+      "situation": 2,
+      "features": [
+        1,
+        0,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "active_features": 10
+    },
+    {
+      "situation": 3,
+      "features": [
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "active_features": 12
+    },
+    {
+      "situation": 4,
+      "features": [
+        1,
+        1,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        0,
+        0
+      ],
+      "active_features": 10
+    },
+    {
+      "situation": 5,
+      "features": [
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "active_features": 9
+    },
+    {
+      "situation": 6,
+      "features": [
+        1,
+        1,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "active_features": 11
+    },
+    {
+      "situation": 7,
+      "features": [
+        1,
+        0,
+        1,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        0
+      ],
+      "active_features": 11
+    },
+    {
+      "situation": 8,
+      "features": [
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "active_features": 12
+    },
+    {
+      "situation": 9,
+      "features": [
+        0,
+        1,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "active_features": 9
+    },
+    {
+      "situation": 10,
+      "features": [
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "active_features": 9
+    }
+  ],
+  "simulations": [
+    {
+      "vigilance": 0.5,
+      "active_category_count": 4,
+      "groups": [
+        {
+          "category": 1,
+          "situations": [
+            1,
+            2
+          ],
+          "prototype": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          "active_features": 5
+        },
+        {
+          "category": 2,
+          "situations": [
+            3,
+            4,
+            8,
+            9
+          ],
+          "prototype": [
+            0,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "active_features": 6
+        },
+        {
+          "category": 3,
+          "situations": [
+            5,
+            7,
+            10
+          ],
+          "prototype": [
+            0,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "active_features": 6
+        },
+        {
+          "category": 4,
+          "situations": [
+            6
+          ],
+          "prototype": [
+            1,
+            1,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "active_features": 11
+        }
+      ],
+      "assignments": [
+        {
+          "situation": 1,
+          "category": 1,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 2,
+          "category": 1,
+          "created_category": false,
+          "match": 0.5,
+          "choice_score": 0.4545041359876375
+        },
+        {
+          "situation": 3,
+          "category": 2,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 4,
+          "category": 2,
+          "created_category": false,
+          "match": 0.7,
+          "choice_score": 0.5832847262728106
+        },
+        {
+          "situation": 5,
+          "category": 3,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 6,
+          "category": 4,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 7,
+          "category": 3,
+          "created_category": false,
+          "match": 0.5454545454545454,
+          "choice_score": 0.6665926008221309
+        },
+        {
+          "situation": 8,
+          "category": 2,
+          "created_category": false,
+          "match": 0.5833333333333334,
+          "choice_score": 0.999857163262391
+        },
+        {
+          "situation": 9,
+          "category": 2,
+          "created_category": false,
+          "match": 0.6666666666666666,
+          "choice_score": 0.857020425653478
+        },
+        {
+          "situation": 10,
+          "category": 3,
+          "created_category": false,
+          "match": 0.6666666666666666,
+          "choice_score": 0.9998333611064822
+        }
+      ]
+    },
+    {
+      "vigilance": 0.8,
+      "active_category_count": 5,
+      "groups": [
+        {
+          "category": 1,
+          "situations": [
+            1,
+            6
+          ],
+          "prototype": [
+            0,
+            1,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "active_features": 10
+        },
+        {
+          "category": 2,
+          "situations": [
+            2,
+            7
+          ],
+          "prototype": [
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          "active_features": 9
+        },
+        {
+          "category": 3,
+          "situations": [
+            3,
+            8
+          ],
+          "prototype": [
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "active_features": 12
+        },
+        {
+          "category": 4,
+          "situations": [
+            4,
+            9
+          ],
+          "prototype": [
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0,
+            0
+          ],
+          "active_features": 8
+        },
+        {
+          "category": 5,
+          "situations": [
+            5,
+            10
+          ],
+          "prototype": [
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "active_features": 9
+        }
+      ],
+      "assignments": [
+        {
+          "situation": 1,
+          "category": 1,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 2,
+          "category": 2,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 3,
+          "category": 3,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 4,
+          "category": 4,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 5,
+          "category": 5,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 6,
+          "category": 1,
+          "created_category": false,
+          "match": 0.9090909090909091,
+          "choice_score": 0.909008271975275
+        },
+        {
+          "situation": 7,
+          "category": 2,
+          "created_category": false,
+          "match": 0.8181818181818182,
+          "choice_score": 0.8999100089991001
+        },
+        {
+          "situation": 8,
+          "category": 3,
+          "created_category": false,
+          "match": 1.0,
+          "choice_score": 0.9999166736105325
+        },
+        {
+          "situation": 9,
+          "category": 4,
+          "created_category": false,
+          "match": 0.8888888888888888,
+          "choice_score": 0.7999200079992002
+        },
+        {
+          "situation": 10,
+          "category": 5,
+          "created_category": false,
+          "match": 1.0,
+          "choice_score": 0.9998889012331964
+        }
+      ]
+    },
+    {
+      "vigilance": 0.9,
+      "active_category_count": 7,
+      "groups": [
+        {
+          "category": 1,
+          "situations": [
+            1,
+            6
+          ],
+          "prototype": [
+            0,
+            1,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "active_features": 10
+        },
+        {
+          "category": 2,
+          "situations": [
+            2
+          ],
+          "prototype": [
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          "active_features": 10
+        },
+        {
+          "category": 3,
+          "situations": [
+            3,
+            8
+          ],
+          "prototype": [
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "active_features": 12
+        },
+        {
+          "category": 4,
+          "situations": [
+            4
+          ],
+          "prototype": [
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            0
+          ],
+          "active_features": 10
+        },
+        {
+          "category": 5,
+          "situations": [
+            5,
+            10
+          ],
+          "prototype": [
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "active_features": 9
+        },
+        {
+          "category": 6,
+          "situations": [
+            7
+          ],
+          "prototype": [
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            0
+          ],
+          "active_features": 11
+        },
+        {
+          "category": 7,
+          "situations": [
+            9
+          ],
+          "prototype": [
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1
+          ],
+          "active_features": 9
+        }
+      ],
+      "assignments": [
+        {
+          "situation": 1,
+          "category": 1,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 2,
+          "category": 2,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 3,
+          "category": 3,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 4,
+          "category": 4,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 5,
+          "category": 5,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 6,
+          "category": 1,
+          "created_category": false,
+          "match": 0.9090909090909091,
+          "choice_score": 0.909008271975275
+        },
+        {
+          "situation": 7,
+          "category": 6,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 8,
+          "category": 3,
+          "created_category": false,
+          "match": 1.0,
+          "choice_score": 0.9999166736105325
+        },
+        {
+          "situation": 9,
+          "category": 7,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 10,
+          "category": 5,
+          "created_category": false,
+          "match": 1.0,
+          "choice_score": 0.9998889012331964
+        }
+      ]
+    },
+    {
+      "vigilance": 0.99,
+      "active_category_count": 8,
+      "groups": [
+        {
+          "category": 1,
+          "situations": [
+            1
+          ],
+          "prototype": [
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "active_features": 11
+        },
+        {
+          "category": 2,
+          "situations": [
+            2
+          ],
+          "prototype": [
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          "active_features": 10
+        },
+        {
+          "category": 3,
+          "situations": [
+            3,
+            8
+          ],
+          "prototype": [
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "active_features": 12
+        },
+        {
+          "category": 4,
+          "situations": [
+            4
+          ],
+          "prototype": [
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            0
+          ],
+          "active_features": 10
+        },
+        {
+          "category": 5,
+          "situations": [
+            5,
+            10
+          ],
+          "prototype": [
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "active_features": 9
+        },
+        {
+          "category": 6,
+          "situations": [
+            6
+          ],
+          "prototype": [
+            1,
+            1,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "active_features": 11
+        },
+        {
+          "category": 7,
+          "situations": [
+            7
+          ],
+          "prototype": [
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            0
+          ],
+          "active_features": 11
+        },
+        {
+          "category": 8,
+          "situations": [
+            9
+          ],
+          "prototype": [
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1
+          ],
+          "active_features": 9
+        }
+      ],
+      "assignments": [
+        {
+          "situation": 1,
+          "category": 1,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 2,
+          "category": 2,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 3,
+          "category": 3,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 4,
+          "category": 4,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 5,
+          "category": 5,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 6,
+          "category": 6,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 7,
+          "category": 7,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 8,
+          "category": 3,
+          "created_category": false,
+          "match": 1.0,
+          "choice_score": 0.9999166736105325
+        },
+        {
+          "situation": 9,
+          "category": 8,
+          "created_category": true,
+          "match": 1.0,
+          "choice_score": 1.0
+        },
+        {
+          "situation": 10,
+          "category": 5,
+          "created_category": false,
+          "match": 1.0,
+          "choice_score": 0.9998889012331964
+        }
+      ]
+    }
+  ]
+};
